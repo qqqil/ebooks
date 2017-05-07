@@ -1,0 +1,5253 @@
+%!PS-Adobe-1.0
+%%Title: foo.mss
+%%DocumentFonts: (atend)
+%%Creator: Andrew Hastings and Scribe 6(1600)
+%%CreationDate: 5 February 1992 16:25
+%%Pages: (atend)
+%%EndComments
+% PostScript Prelude for Scribe.
+/BS {/SV save def 0.0 792.0 translate .01 -.01 scale} bind def
+/ES {showpage SV restore} bind def
+/SC {setrgbcolor} bind def
+/FMTX matrix def
+/RDF {WFT SLT 0.0 eq 
+  {SSZ 0.0 0.0 SSZ neg 0.0 0.0 FMTX astore}
+  {SSZ 0.0 SLT neg sin SLT cos div SSZ mul SSZ neg 0.0 0.0 FMTX astore}
+  ifelse makefont setfont} bind def
+/SLT 0.0 def
+/SI { /SLT exch cvr def RDF} bind def
+/WFT /Courier findfont def
+/SF { /WFT exch findfont def RDF} bind def
+/SSZ 1000.0 def
+/SS { /SSZ exch 100.0 mul def RDF} bind def
+/AF { /WFT exch findfont def /SSZ exch 100.0 mul def RDF} bind def
+/MT /moveto load def
+/XM {currentpoint exch pop moveto} bind def
+/UL {gsave newpath moveto dup 2.0 div 0.0 exch rmoveto
+   setlinewidth 0.0 rlineto stroke grestore} bind def
+/LH {gsave newpath moveto setlinewidth
+   0.0 rlineto
+   gsave stroke grestore} bind def
+/LV {gsave newpath moveto setlinewidth
+   0.0 exch rlineto
+   gsave stroke grestore} bind def
+/BX {gsave newpath moveto setlinewidth
+   exch
+   dup 0.0 rlineto
+   exch 0.0 exch neg rlineto
+   neg 0.0 rlineto
+   closepath
+   gsave stroke grestore} bind def
+/BX1 {grestore} bind def
+/BX2 {setlinewidth 1 setgray stroke grestore} bind def
+/PB {/PV save def newpath translate
+    100.0 -100.0 scale pop /showpage {} def} bind def
+/PE {PV restore} bind def
+/GB {/PV save def newpath translate rotate
+    div dup scale 100.0 -100.0 scale /showpage {} def} bind def
+/GE {PV restore} bind def
+/FB {dict dup /FontMapDict exch def begin} bind def
+/FM {cvn exch cvn exch def} bind def
+/FE {end /original-findfont /findfont load def  /findfont
+   {dup FontMapDict exch known{FontMapDict exch get} if
+   original-findfont} def} bind def
+/BC {gsave moveto dup 0 exch rlineto exch 0 rlineto neg 0 exch rlineto closepath clip} bind def
+/EC /grestore load def
+/SH /show load def
+/MX {exch show 0.0 rmoveto} bind def
+/W {0 32 4 -1 roll widthshow} bind def
+/WX {0 32 5 -1 roll widthshow 0.0 rmoveto} bind def
+%%EndProlog
+%%Page: 22 1
+BS
+0 SI
+12 /Times-Bold AF
+11914 8004 MT
+(Distributed Lock Management in a Transaction Processing Environment)SH
+10 /Times-Roman AF
+26531 9946 MT
+(Andrew B. Hastings)SH
+24864 12156 MT
+(School of Computer Science)SH
+24989 13261 MT
+(Carnegie Mellon University)SH
+26280 14366 MT
+(Pittsburgh, PA 15213)SH
+/Times-Bold SF
+15761 17065 MT
+(Abstract)SH
+/Times-Roman SF
+31500 17081 MT
+(sharing are:)SH
+5544 18170 MT
+(Data sharing, in which data is delivered automatically to a)14 W
+/Symbol SF
+31790 18186 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(There is sufficient communication bandwidth to)
+8 W( permit)7 W
+5544 19275 MT
+(process as it is needed,)
+143 W( is a potentially useful technique)144 W
+32500 19291 MT
+(large volumes of data to be transferred quickly.)SH
+5544 20380 MT
+(for constructing reliable transactional applications in)464 W
+/Symbol SF
+31790 20728 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(The set of data referenced by)
+42 W( a process is not known a)43 W
+5544 21485 MT
+(distributed systems.  We discuss distributed)1180 W
+32500 21833 MT
+(priori and may vary over time.  Since the data cannot)91 W
+5544 22590 MT
+(synchronization for data sharing, and present the design)153 W
+32500 22938 MT
+(be assigned statically to a)
+252 W( single server, locality of)253 W
+5544 23695 MT
+(of a distributed lock manager for)
+64 W( the Camelot transaction)65 W
+32500 24043 MT
+(reference can best be achieved)
+583 W( by dynamically)582 W
+5544 24800 MT
+(facility. The)
+370 W( lock manager is a component of a)
+60 W( proposed)59 W
+32500 25148 MT
+(shipping the data to the server.)SH
+5544 25905 MT
+(implementation of data sharing in)
+798 W( the Camelot)799 W
+/Symbol SF
+31790 26585 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(Once a process references some data,)
+215 W( it is likely to)216 W
+5544 27010 MT
+(environment. We)
+650 W( report a number of experiments)
+200 W( that)199 W
+32500 27690 MT
+(reference that data again)
+184 W( soon.  This allows caching)183 W
+5544 28115 MT
+(demonstrate the correct operation of the lock manager)
+9 W( and)10 W
+32500 28795 MT
+(techniques to be effective.)SH
+5544 29220 MT
+(describe its performance.)
+462 W( The)
+1172 W( performance metrics)461 W
+/Symbol SF
+31790 30232 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(The size of a function request and)
+27 W( reply are larger than)28 W
+5544 30325 MT
+(indicate that distributed lock management should)
+363 W( not)364 W
+32500 31337 MT
+(the amount of data needed to process the request.)
+19 W( This)286 W
+5544 31430 MT
+(reduce the feasibility of data sharing in)
+68 W( this environment.)67 W
+32500 32442 MT
+(is a tradeoff between obtaining the data and)
+20 W( processing)21 W
+5544 32535 MT
+(The similarity between the caching and)
+169 W( synchronization)170 W
+32500 33547 MT
+(the request locally, versus shipping the request)
+253 W( and)252 W
+5544 33640 MT
+(strategies appropriate for locks and data suggests)
+292 W( that)291 W
+32500 34652 MT
+(processing it at the data's location.)SH
+5544 34745 MT
+(protocols developed)
+668 W( for distributed locks will be)669 W
+5544 35850 MT
+(applicable to data sharing.)SH
+/Symbol SF
+31790 36089 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(Different processes may write the same data,)
+380 W( but)381 W
+32500 37194 MT
+(seldom at the)
+74 W( same time.  Low contention reduces the)73 W
+32500 38299 MT
+(overhead of synchronization.)SH
+/Times-Bold SF
+14021 38924 MT
+(1. Introduction)SH
+/Symbol SF
+31790 39736 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(Many processes read the data,)
+60 W( but few write it.  When)61 W
+6544 40121 MT
+(A common paradigm used)
+435 W( in the construction of)434 W
+32500 40841 MT
+(there are few)
+627 W( writes, the cache is invalidated)626 W
+5544 41318 MT
+(distributed programs is the)326 W
+/Times-Italic SF
+17793 XM
+(client-server model)327 W
+/Times-Roman SF
+26118 XM
+([1], or)327 W
+32500 41946 MT
+(infrequently, and costs remain low.)SH
+/Times-Italic SF
+5544 42515 MT
+(function shipping)107 W
+/Times-Roman SF
+(. In)
+464 W( this model, a process may)
+107 W( take on)106 W
+31500 43143 MT
+(Some of the factors that favor function shipping are:)SH
+5544 43712 MT
+(two different)
+3 W( roles.  As a)4 W
+/Times-Italic SF
+15759 XM
+(client)SH
+/Times-Roman SF
+(, it sends a function request)4 W
+/Symbol SF
+31790 44248 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(There is low per-message overhead and low latency.)166 W
+5544 44909 MT
+(to another process and awaits a reply.  As a)206 W
+/Times-Italic SF
+25183 XM
+(server)SH
+/Times-Roman SF
+(, it)206 W
+32500 45353 MT
+(Thus, remote procedure calls encounter low delays.)SH
+5544 46106 MT
+(accepts a function request, performs the requested)563 W
+/Symbol SF
+31790 46790 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(The set of data)
+156 W( referenced by a process may be pre-)155 W
+5544 47303 MT
+(operations, and returns)
+158 W( a reply.  A server may satisfy a)157 W
+32500 47895 MT
+(determined, does not)
+30 W( overlap the set of data referenced)31 W
+5544 48500 MT
+(function request by accessing data)
+177 W( local to it and/or by)178 W
+32500 49000 MT
+(by another process, and does)
+215 W( not change over time.)214 W
+5544 49697 MT
+(sending requests to other servers to access remote data.)SH
+32500 50105 MT
+(This allows data to be placed statically.)SH
+6544 51193 MT
+(An alternative)
+205 W( paradigm to function shipping is)204 W
+/Times-Italic SF
+27166 XM
+(data)SH
+/Symbol SF
+31790 51542 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(Access to remote data)
+298 W( is infrequent; the cost of a)299 W
+/Times-Italic SF
+5544 52390 MT
+(sharing)SH
+/Times-Roman SF
+(. In)
+504 W( this model, data is shipped automatically to)128 W
+32500 52647 MT
+(remote procedure call is seldom incurred.)SH
+5544 53587 MT
+(each process as the data is)
+527 W( referenced, under the)526 W
+/Symbol SF
+31790 54084 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(An access to remote)
+340 W( data does not imply another)339 W
+5544 54784 MT
+(assumption that the data will be used there for)
+154 W( a while.)155 W
+32500 55189 MT
+(access to the same data will soon follow.)
+160 W( Thus,)
+572 W( the)161 W
+5544 55981 MT
+(Data sharing has been used successfully)
+30 W( in distributed file)29 W
+32500 56294 MT
+(cost of a remote procedure)
+261 W( call is not likely to be)260 W
+5544 57178 MT
+(systems, such)
+209 W( as NFS)
+210 W( [2])
+SH( and AFS)
+210 W( [3],)
+SH( in which client)210 W
+32500 57399 MT
+(repeated soon.)SH
+5544 58375 MT
+(nodes use local)
+122 W( storage to cache data.  Data sharing can)121 W
+/Symbol SF
+31790 58836 MT
+(\267)SH
+/Times-Roman SF
+32500 XM
+(Security requirements dictate strict control)
+267 W( over the)268 W
+5544 59572 MT
+(provide a familiar model to application programmers by)133 W
+32500 59941 MT
+(operations that may be performed on the data.)SH
+5544 60769 MT
+(presenting the illusion of a tightly-coupled)
+30 W( multiprocessor)29 W
+32500 61437 MT
+(Many distributed system architectures support)
+64 W( function)63 W
+5544 61966 MT
+(through the use of distributed shared memory.)SH
+31500 62634 MT
+(shipping by providing messages or remote procedure calls)14 W
+6544 63462 MT
+(The structure of the)
+307 W( distributed application and the)308 W
+31500 63831 MT
+(\050RPCs\051 [5].)
+SH( Often,)
+650 W( a restricted form of data sharing is)199 W
+5544 64659 MT
+(underlying system architecture both influence the choice)123 W
+31500 65028 MT
+(provided in the form)
+577 W( of shared memory between)578 W
+5544 65856 MT
+(of paradigm)
+282 W( [4].)
+SH( Some)
+814 W( of the factors that favor data)283 W
+31500 66225 MT
+(processes on the same host.)
+66 W( A)
+380 W( number of recent systems)65 W
+23400 50 5544 66852 UL
+31500 67422 MT
+(\050Clouds [6],)
+SH( Ivy)
+281 W( [7],)
+SH( Mach)
+281 W( [8],)
+SH( Mirage)
+281 W( [9],)
+SH( and)
+281 W( V)
+282 W( [10]\051)SH
+8 SS 
+5544 67885 MT
+(This work)
+275 W( was sponsored by IBM and by the Defense Advanced)274 W
+10 SS 
+31500 68619 MT
+(provide generalized data sharing in the form of)
+9 W( distributed)8 W
+8 SS 
+5544 68809 MT
+(Research Projects Agency, ARPA)
+167 W( Order No. 4976 \050Amendment 20\051,)168 W
+5544 69733 MT
+(under contract)
+580 W( F33615-87-C-1499, monitored by the Avionics)579 W
+10 SS 
+31500 69816 MT
+(shared memory.)SH
+8 SS 
+5544 70657 MT
+(Laboratory, Air)
+398 W( Force Wright Aeronautical Laboratories, Wright-)399 W
+10 SS 
+32500 71312 MT
+(An important)
+209 W( issue in any shared memory system is)210 W
+8 SS 
+5544 71581 MT
+(Patterson AFB.  The views expressed are those of the author.)SH
+10 SS 
+30100 75600 MT
+(22)SH
+ES
+%%Page: 23 2
+BS
+0 SI
+10 /Times-Roman AF
+5544 7886 MT
+(synchronizing access to shared data.)
+590 W( This)
+1428 W( paper)589 W
+31500 XM
+(techniques may be used)
+72 W( [18].)
+SH( Experiments)
+392 W( by Carey and)71 W
+5544 9083 MT
+(investigates transactional synchronization for distributed)184 W
+31500 XM
+(Livny [19])
+SH( suggest that two-phase locking)
+558 W( provides)559 W
+5544 10280 MT
+(shared memory.  We describe the design and)780 W
+31500 XM
+(superior performance when)
+62 W( message costs are low.  They)61 W
+5544 11477 MT
+(implementation of a distributed lock)
+323 W( manager for the)324 W
+31500 XM
+(also suggest that)
+133 W( high message costs and replicated data)134 W
+5544 12674 MT
+(Camelot transaction)
+1037 W( facility, and compare the)1036 W
+31500 XM
+(favor optimistic techniques.  The Camelot system uses)224 W
+5544 13871 MT
+(performance of the)
+442 W( distributed lock manager to the)443 W
+31500 XM
+(two-phase locking, and relies on timeouts to abort)486 W
+5544 15068 MT
+(performance of the original Camelot lock)
+124 W( manager.  We)123 W
+31500 XM
+(deadlocked transactions.)SH
+5544 16265 MT
+(argue that caching)
+43 W( can provide performance that is within)44 W
+32500 16564 MT
+(Each Camelot server)
+126 W( includes a lock manager module)125 W
+5544 17462 MT
+(a small percentage of the performance of the original)273 W
+31500 17761 MT
+(which provides read and write locks.)
+78 W( However,)
+408 W( Camelot)79 W
+5544 18659 MT
+(nondistributed manager.)SH
+31500 18958 MT
+(locks are not shared between servers.  To allow data)
+27 W( to be)26 W
+31500 20155 MT
+(shared by different servers \050i.e., to)
+92 W( support data sharing\051,)93 W
+/Times-Bold SF
+5794 20409 MT
+(Background)SH
+/Times-Roman SF
+31500 21352 MT
+(locks must be shared.)SH
+6544 21606 MT
+(Distributed transactions,)
+535 W( in conjunction with data)536 W
+5544 22803 MT
+(sharing or)
+74 W( function shipping, simplify the construction of)73 W
+32500 22848 MT
+(In some respects, locks are)
+141 W( isomorphic to data.  Both)140 W
+5544 24000 MT
+(reliable and available distributed)
+39 W( applications by reducing)40 W
+31500 24045 MT
+(locks and data may be)
+1 W( held exclusively \050write mode\051 or be)2 W
+5544 25197 MT
+(the attention that)
+669 W( must be paid to failures and)668 W
+31500 25242 MT
+(shared \050read mode\051.  Both may be cached)
+103 W( by a server to)102 W
+5544 26394 MT
+(concurrency [11, 12].  A transaction has these properties:)SH
+31500 26439 MT
+(improve performance.  Both)
+109 W( may migrate from server to)110 W
+648 50 15054 27305 UL
+31500 27636 MT
+(server. Algorithms)
+275 W( and protocols for sharing locks should)12 W
+/Symbol SF
+5834 27759 MT
+(\267)SH
+/Times-Bold SF
+6544 XM
+(Failure atomicity)450 W
+/Times-Roman SF
+16402 XM
+(either all of the operations)450 W
+31500 28833 MT
+(be valuable as guides to)
+279 W( algorithms and protocols for)280 W
+6544 28864 MT
+(contained within the transaction)
+10 W( complete successfully,)9 W
+6544 29969 MT
+(or none of)
+176 W( them do.  To implement this property, it)177 W
+31500 30030 MT
+(sharing data.)SH
+6544 31074 MT
+(may be necessary)
+91 W( to undo some completed operations)90 W
+32500 31526 MT
+(The performance improvements afforded)
+265 W( by caching)264 W
+6544 32179 MT
+(if other operations in the enclosing transaction fail.)SH
+31500 32723 MT
+(come at)
+237 W( the cost of increased complexity in providing)238 W
+648 50 12179 33162 UL
+/Symbol SF
+5834 33616 MT
+(\267)SH
+/Times-Bold SF
+6544 XM
+(Permanence)SH
+/Times-Roman SF
+13186 XM
+(the effects of a completed)
+109 W( transaction)110 W
+31500 33920 MT
+(shared memory)455 W
+/Times-Italic SF
+38853 XM
+(coherence)SH
+/Times-Roman SF
+43667 XM
+(\050that is, reading)
+455 W( a given)454 W
+6544 34721 MT
+(will never be lost.)
+409 W( To)
+1067 W( implement this property,)408 W
+31500 35117 MT
+(location always returns the)
+154 W( most recent value written to)155 W
+6544 35826 MT
+(information is recorded in)549 W
+/Times-Italic SF
+19406 XM
+(stable storage)550 W
+/Times-Roman SF
+(, often)550 W
+31500 36314 MT
+(that location\051.  Multiprocessor)
+770 W( cache consistency)769 W
+6544 36931 MT
+(provided in the form of replicated disks or memory.)SH
+31500 37511 MT
+(protocols can be adapted to)
+129 W( the coherence problem)
+130 W( [20];)SH
+648 50 13992 37914 UL
+/Symbol SF
+5834 38368 MT
+(\267)SH
+/Times-Bold SF
+6544 XM
+(Serializability)SH
+/Times-Roman SF
+16143 XM
+(transactions may execute)1252 W
+31500 38708 MT
+(however, the number of messages needed)
+20 W( may be reduced)19 W
+6544 39473 MT
+(concurrently, but the effects will be the)
+74 W( same as if the)75 W
+31500 39905 MT
+(if concurrency control and)
+660 W( coherence control are)661 W
+6544 40578 MT
+(transactions had executed serially.)SH
+31500 41102 MT
+(unified [21].)SH
+6544 42074 MT
+(A distributed transaction is a transaction that)
+125 W( involves)124 W
+/Times-Bold SF
+34825 42852 MT
+(2. Design of a distributed lock manager)SH
+/Times-Roman SF
+5544 43271 MT
+(more than one server.  A protocol)
+168 W( known as)169 W
+/Times-Italic SF
+24833 XM
+(two-phase)SH
+5544 44468 MT
+(commit)SH
+/Times-Roman SF
+(, which includes)38 W
+/Times-Italic SF
+15379 XM
+(prepared)SH
+/Times-Roman SF
+19333 XM
+(and)SH
+/Times-Italic SF
+21065 XM
+(committed)SH
+/Times-Roman SF
+25518 XM
+(states, is)37 W
+/Times-Bold SF
+31750 44602 MT
+(Locks)SH
+/Times-Roman SF
+5544 45665 MT
+(usually used to guarantee that all)
+103 W( servers in a distributed)104 W
+32500 45799 MT
+(Locks are identified to)
+58 W( the distributed lock manager by)57 W
+5544 46862 MT
+(transaction agree on the outcome of the transaction.)
+76 W( The)401 W
+31500 46996 MT
+(an ordered pair)
+37 W( of integers.  The first integer indicates the)38 W
+5544 48059 MT
+(Camelot system)
+157 W( [13, 14])
+SH( is an example of a system that)158 W
+/Times-Italic SF
+31500 48193 MT
+(lock space)256 W
+/Times-Roman SF
+(, and the second)
+256 W( integer indicates the)255 W
+/Times-Italic SF
+52734 XM
+(name)SH
+/Times-Roman SF
+5544 49256 MT
+(supports distributed transactions and function)
+247 W( shipping,)246 W
+31500 49390 MT
+(within the space.  Usually,)
+147 W( the application designer will)148 W
+5544 50453 MT
+(but not data sharing.)SH
+31500 50587 MT
+(use the physical address or hash value)
+60 W( of an object as the)59 W
+31500 51784 MT
+(name. The)
+252 W( object class or the identity)
+1 W( of the node backing)2 W
+6544 51949 MT
+(To better support concurrency, Camelot allows)714 W
+31500 52981 MT
+(the stable storage for the object will be used as the lock)115 W
+5544 53146 MT
+(transactions to be nested:)
+30 W( a)
+309 W( subtransaction may be started)29 W
+31500 54178 MT
+(space.)SH
+5544 54343 MT
+(within the scope of another transaction)
+522 W( [15].)
+SH( The)1294 W
+5544 55540 MT
+(subtransaction may commit or)
+165 W( abort without causing its)164 W
+32500 55674 MT
+(A transaction may request a lock)
+15 W( in read or write mode.)16 W
+5544 56737 MT
+(parent to commit or abort.  A top-level)
+60 W( transaction, along)61 W
+31500 56871 MT
+(If the transaction intends only to read the object, it)
+32 W( should)31 W
+5544 57934 MT
+(with all of)
+243 W( its descendents, is collectively known as a)242 W
+31500 58068 MT
+(request a read-mode)
+180 W( lock.  If the transaction intends to)181 W
+/Times-Italic SF
+5544 59131 MT
+(family)SH
+/Times-Roman SF
+(.)SH
+31500 59265 MT
+(write \050or to read and write\051 the object, it should request a)57 W
+31500 60462 MT
+(write-mode lock.  Many)
+112 W( transactions may hold a lock in)113 W
+6544 60627 MT
+(To guarantee the failure atomicity and)
+336 W( permanence)337 W
+31500 61659 MT
+(read mode concurrently.  But only one transaction may)172 W
+5544 61824 MT
+(properties of transactions, an audit trail, or)60 W
+/Times-Italic SF
+23211 XM
+(log)SH
+/Times-Roman SF
+(, is used in)59 W
+31500 62856 MT
+(hold a lock in write mode, and it may)
+69 W( do so only if there)70 W
+5544 63021 MT
+(conjunction with periodic dumps, or)192 W
+/Times-Italic SF
+21282 XM
+(checkpoints)SH
+/Times-Roman SF
+26446 XM
+(of the)193 W
+31500 64053 MT
+(are no read-mode holders.  If a transaction requests)
+27 W( a lock)26 W
+5544 64218 MT
+(system's state)
+322 W( [16].)
+SH( Each)
+892 W( Camelot node has its own)321 W
+31500 65250 MT
+(when there are conflicting holders, it)
+106 W( must wait until the)107 W
+5544 65415 MT
+(logically independent)
+171 W( log, which may be provided by a)172 W
+31500 66447 MT
+(holders release the lock.  When a transaction commits or)82 W
+5544 66612 MT
+(local disk, or a)
+64 W( network logging service)
+63 W( [17].)
+SH( To)
+376 W( support)63 W
+31500 67644 MT
+(aborts, it releases its locks.)SH
+5544 67809 MT
+(data sharing, this log must)
+180 W( be shared between nodes in)181 W
+5544 69006 MT
+(some way.)SH
+32500 69140 MT
+(In many transaction systems, each server has its)
+158 W( own)159 W
+31500 70337 MT
+(private \050local\051 lock space.  Locking is implemented)
+76 W( via a)75 W
+6544 70502 MT
+(To guarantee the serializability property of)1053 W
+31500 71534 MT
+(library and associated data)
+57 W( structures that are loaded with)58 W
+5544 71699 MT
+(transactions, one)
+847 W( of several concurrency control)848 W
+30100 75600 MT
+(23)SH
+ES
+%%Page: 24 3
+BS
+0 SI
+10 /Times-Roman AF
+5544 7886 MT
+(each server.  The server obtains a lock by)
+288 W( making a)287 W
+31500 XM
+(the lock is in a)
+39 W( lock space local to the server, or when the)40 W
+5544 9083 MT
+(procedure call to the library.  The library uses)
+119 W( low-level)120 W
+31500 XM
+(lock is)
+83 W( cached\051, or if it must contact the appropriate lock)82 W
+5544 10280 MT
+(synchronization techniques)
+133 W( such as semaphores or busy-)132 W
+31500 XM
+(manager. The)
+1042 W( library)
+396 W( must also respond to a lock)397 W
+5544 11477 MT
+(waiting to control access to the)
+112 W( data structures it uses to)113 W
+31500 XM
+(manager request to return a cached lock.)SH
+5544 12674 MT
+(implement locks.)SH
+32500 12973 MT
+(Several servers may cache a read-mode lock, but)
+103 W( only)102 W
+6544 14170 MT
+(A server written)
+213 W( for the Camelot environment might)212 W
+31500 XM
+(one may cache a)
+571 W( write-mode lock.  However, a)572 W
+5544 15367 MT
+(use the following syntax:)763 W
+/Courier SF
+19944 XM
+(LOCK\050&array[i],)SH
+/Times-Roman SF
+31500 XM
+(transaction may involve multiple servers concurrently,)314 W
+/Courier SF
+5544 16564 MT
+(LOCK_SPACE_PRIMARY,LOCK_MODE_READ\051)SH
+/Times-Roman SF
+(. This)722 W
+31500 XM
+(making it possible)
+45 W( for a given transaction to hold a write-)46 W
+4388 50 43940 16764 UL
+5544 17761 MT
+(is a request to the library to obtain a read-mode)
+1 W( lock in the)2 W
+31500 XM
+(mode lock in more than one server.  \050However, at)
+135 W( most)134 W
+8 SS 
+50870 18613 MT
+(1)SH
+10 SS 
+5544 18958 MT
+(server's primary lock space.)
+194 W( The)
+636 W( name chosen for the)193 W
+31500 XM
+(one server will be caching the lock in this)
+17 W( case.\051)16 W
+51802 XM
+(When a)16 W
+2443 50 33211 19158 UL
+5544 20155 MT
+(lock is simply the address of the)SH
+/Courier SF
+18682 XM
+(i)SH
+/Times-Roman SF
+(th element of an array.)SH
+31500 XM
+(lock is held)
+435 W( by multiple servers, the lock manager)436 W
+31500 21352 MT
+(consults an)
+261 W( application-specified)260 W
+/Times-Italic SF
+45640 XM
+(lock policy)260 W
+/Times-Roman SF
+50770 XM
+(\050set via a)260 W
+6544 21651 MT
+(When a server crashes, all)
+589 W( of its uncommitted)590 W
+31500 22549 MT
+(procedure call to)
+62 W( the lock library\051 to decide which one of)63 W
+5544 22848 MT
+(transactions abort,)
+59 W( except those that have already reached)58 W
+31500 23746 MT
+(the servers \050if any\051 is permitted to cache the lock.)SH
+5544 24045 MT
+(the prepared state.  When a server crashes and)
+24 W( recovers, it)25 W
+5544 25242 MT
+(must remember the locks which are held by)
+273 W( prepared)272 W
+/Times-Bold SF
+31750 25496 MT
+(Cache control)SH
+/Times-Roman SF
+5544 26439 MT
+(transactions. Therefore,)
+770 W( when a)
+260 W( transaction enters the)261 W
+32500 26693 MT
+(The lock manager consults a lock policy to)
+120 W( determine)119 W
+5544 27636 MT
+(prepared state, the)
+157 W( server records the locks held by that)156 W
+31500 27890 MT
+(which server is permitted to cache a lock.)
+82 W( Since)
+415 W( a given)83 W
+5544 28833 MT
+(transaction in stable storage.)SH
+31500 29087 MT
+(transaction may include)
+376 W( several servers, only one of)375 W
+31500 30284 MT
+(which may cache the lock)
+390 W( in write mode, the lock)391 W
+/Times-Bold SF
+5794 30583 MT
+(Distributed operation)SH
+/Times-Roman SF
+31500 31481 MT
+(manager may transfer caching privileges from one server)78 W
+6544 31780 MT
+(The function)
+513 W( of the distributed lock manager is)514 W
+31500 32678 MT
+(to another while)
+162 W( the lock is held in both servers.  Four)163 W
+5544 32977 MT
+(distributed between a lock manager)
+197 W( process and a lock)196 W
+31500 33875 MT
+(policies are provided:)SH
+5544 34174 MT
+(library module that)
+397 W( is a component of every server)398 W
+648 50 35281 34786 UL
+/Symbol SF
+31790 35240 MT
+(\267)SH
+/Times-Bold SF
+32500 XM
+(never)SH
+/Times-Roman SF
+36322 XM
+(the lock is never cached by)
+143 W( the server.  All)142 W
+5544 35371 MT
+(process.)SH
+32500 36345 MT
+(requests are forwarded to the lock manager.)SH
+648 50 35727 37328 UL
+/Symbol SF
+31790 37782 MT
+(\267)SH
+/Times-Bold SF
+32500 XM
+(release)SH
+/Times-Roman SF
+36660 XM
+(if a server requests a lock cached by another)35 W
+32500 38887 MT
+(server, neither server is allowed to cache the)
+22 W( lock.  But)21 W
+32500 39992 MT
+(if a server requests a lock when)
+36 W( the lock is not held by)37 W
+32500 41097 MT
+(any other server, it is permitted to cache the lock.)SH
+648 50 34679 42080 UL
+/Symbol SF
+31790 42534 MT
+(\267)SH
+/Times-Bold SF
+32500 XM
+(first)SH
+/Times-Roman SF
+35729 XM
+(if a server requests)
+152 W( a lock cached by another)151 W
+32500 43639 MT
+(server, the other server is permitted to retain its)
+24 W( cached)25 W
+9 SS 
+443 1000 0 4880 58180 GB 
+%%BeginDocument: model2.ps
+%!PS-Adobe-1.0
+%%Title: model2.ps
+%%Creator:  and dp2ps version 2.0
+%%CreationDate: Thu Jul  5 15:15:13 1990
+%%Pages: (atend)
+%%DocumentFonts: (atend)
+%%BoundingBox: (atend)
+% model2.dp was created by dp Version 5.171 Date: 26-May-89 15:57:07
+
+%%EndComments
+%%EndProlog
+%%Page: 0 1
+1 setlinecap
+/fontp { /Courier findfont 7 scalefont } def
+306.00 396.00 translate %  ### #
+0.686 0.679 scale
+/cmat { matrix currentmatrix } def
+/stringmat { cmat 3 get cmat exch abs neg 3 exch put
+             cmat 0 get cmat exch abs     0 exch put
+             cmat setmatrix} def
+/PIN { newpath
+1 1 moveto 1 -1 lineto -1 -1 lineto
+-1 1 lineto closepath fill} def
+/font7 { /Helvetica findfont [0 cos 0 sin 0 sin neg 0 cos 0 0] makefont 12 scalefont } def
+gsave % S 249 45 259 59 7 1 1 D
+249 259 add 2 div 45 59 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(D) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(D) show grestore
+
+gsave % S 153 45 164 59 7 1 1 C
+153 164 add 2 div 45 59 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(C) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(C) show grestore
+
+gsave % S -102 48 -93 62 7 1 1 B
+-102 -93 add 2 div 48 62 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(B) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(B) show grestore
+
+gsave % S -201 48 -191 62 7 1 1 A
+-201 -191 add 2 div 48 62 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(A) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(A) show grestore
+
+gsave 1 setlinewidth 98 -41 translate
+0.00 34.00 moveto
+1.74 32.46 lineto
+3.47 30.96 lineto
+5.19 29.50 lineto
+6.91 28.08 lineto
+8.62 26.69 lineto
+10.33 25.35 lineto
+12.03 24.05 lineto
+13.72 22.79 lineto
+15.40 21.56 lineto
+17.08 20.38 lineto
+18.76 19.24 lineto
+20.43 18.13 lineto
+22.09 17.07 lineto
+23.74 16.04 lineto
+25.39 15.06 lineto
+27.03 14.11 lineto
+28.67 13.20 lineto
+30.30 12.34 lineto
+31.92 11.51 lineto
+33.54 10.72 lineto
+35.15 9.97 lineto
+36.76 9.26 lineto
+38.35 8.59 lineto
+39.95 7.96 lineto
+41.53 7.38 lineto
+43.11 6.82 lineto
+44.68 6.31 lineto
+46.25 5.84 lineto
+47.81 5.41 lineto
+49.37 5.02 lineto
+50.91 4.67 lineto
+52.45 4.36 lineto
+53.99 4.08 lineto
+55.52 3.84 lineto
+57.04 3.62 lineto
+58.56 3.41 lineto
+60.07 3.21 lineto
+61.57 3.03 lineto
+63.07 2.86 lineto
+64.56 2.70 lineto
+66.04 2.56 lineto
+67.52 2.43 lineto
+69.00 2.31 lineto
+70.46 2.21 lineto
+71.92 2.12 lineto
+73.37 2.04 lineto
+74.82 1.98 lineto
+76.26 1.93 lineto
+77.70 1.90 lineto
+79.13 1.88 lineto
+80.55 1.87 lineto
+81.96 1.87 lineto
+83.37 1.89 lineto
+84.77 1.92 lineto
+86.17 1.97 lineto
+87.56 2.03 lineto
+88.95 2.10 lineto
+90.32 2.19 lineto
+91.69 2.29 lineto
+93.06 2.40 lineto
+94.42 2.53 lineto
+95.77 2.67 lineto
+97.12 2.82 lineto
+98.46 2.99 lineto
+99.79 3.17 lineto
+101.12 3.36 lineto
+102.44 3.57 lineto
+103.77 3.82 lineto
+105.12 4.10 lineto
+106.49 4.43 lineto
+107.87 4.79 lineto
+109.27 5.20 lineto
+110.68 5.64 lineto
+112.12 6.13 lineto
+113.56 6.66 lineto
+115.03 7.22 lineto
+116.50 7.83 lineto
+118.00 8.48 lineto
+119.51 9.17 lineto
+121.04 9.90 lineto
+122.58 10.67 lineto
+124.14 11.48 lineto
+125.72 12.33 lineto
+127.31 13.22 lineto
+128.92 14.16 lineto
+130.55 15.13 lineto
+132.19 16.14 lineto
+133.85 17.20 lineto
+135.52 18.29 lineto
+137.21 19.42 lineto
+138.92 20.60 lineto
+140.64 21.82 lineto
+142.38 23.07 lineto
+144.13 24.37 lineto
+145.90 25.71 lineto
+147.69 27.08 lineto
+149.49 28.50 lineto
+151.31 29.96 lineto
+153.15 31.46 lineto
+154.99 32.99 lineto
+[] 0 setdash stroke grestore
+
+gsave 1 setlinewidth -74 -37 translate
+0.00 30.00 moveto
+1.61 28.70 lineto
+3.20 27.42 lineto
+4.77 26.19 lineto
+6.33 24.98 lineto
+7.86 23.81 lineto
+9.38 22.66 lineto
+10.88 21.55 lineto
+12.36 20.48 lineto
+13.81 19.43 lineto
+15.26 18.42 lineto
+16.68 17.44 lineto
+18.08 16.49 lineto
+19.46 15.58 lineto
+20.83 14.70 lineto
+22.17 13.85 lineto
+23.50 13.03 lineto
+24.81 12.24 lineto
+26.10 11.49 lineto
+27.37 10.77 lineto
+28.62 10.08 lineto
+29.85 9.42 lineto
+31.07 8.80 lineto
+32.26 8.21 lineto
+33.44 7.65 lineto
+34.59 7.13 lineto
+35.73 6.63 lineto
+36.85 6.17 lineto
+37.95 5.74 lineto
+39.03 5.34 lineto
+40.10 4.98 lineto
+41.14 4.65 lineto
+42.16 4.35 lineto
+43.17 4.08 lineto
+44.16 3.84 lineto
+45.16 3.61 lineto
+46.17 3.40 lineto
+47.18 3.19 lineto
+48.20 2.99 lineto
+49.23 2.80 lineto
+50.26 2.62 lineto
+51.30 2.45 lineto
+52.35 2.29 lineto
+53.41 2.14 lineto
+54.47 2.00 lineto
+55.54 1.87 lineto
+56.62 1.75 lineto
+57.70 1.64 lineto
+58.79 1.54 lineto
+59.89 1.45 lineto
+61.00 1.38 lineto
+62.11 1.30 lineto
+63.23 1.24 lineto
+64.36 1.19 lineto
+65.50 1.15 lineto
+66.64 1.12 lineto
+67.79 1.10 lineto
+68.95 1.09 lineto
+70.11 1.09 lineto
+71.28 1.10 lineto
+72.46 1.12 lineto
+73.65 1.15 lineto
+74.84 1.19 lineto
+76.04 1.24 lineto
+77.25 1.30 lineto
+78.46 1.36 lineto
+79.68 1.44 lineto
+80.91 1.53 lineto
+82.15 1.66 lineto
+83.41 1.83 lineto
+84.68 2.06 lineto
+85.96 2.32 lineto
+87.25 2.63 lineto
+88.56 2.99 lineto
+89.88 3.39 lineto
+91.22 3.84 lineto
+92.57 4.34 lineto
+93.93 4.88 lineto
+95.31 5.47 lineto
+96.70 6.10 lineto
+98.10 6.78 lineto
+99.52 7.50 lineto
+100.95 8.28 lineto
+102.39 9.09 lineto
+103.85 9.96 lineto
+105.32 10.86 lineto
+106.80 11.82 lineto
+108.30 12.82 lineto
+109.81 13.86 lineto
+111.34 14.96 lineto
+112.88 16.09 lineto
+114.43 17.28 lineto
+115.99 18.51 lineto
+117.57 19.78 lineto
+119.16 21.11 lineto
+120.77 22.47 lineto
+122.39 23.89 lineto
+124.02 25.35 lineto
+125.67 26.85 lineto
+127.33 28.40 lineto
+128.99 29.99 lineto
+stroke grestore
+
+gsave 1 setlinewidth -174 -58 translate
+0.00 52.00 moveto
+3.21 49.29 lineto
+6.38 46.67 lineto
+9.49 44.14 lineto
+12.56 41.71 lineto
+15.57 39.37 lineto
+18.53 37.12 lineto
+21.45 34.97 lineto
+24.31 32.92 lineto
+27.12 30.95 lineto
+29.88 29.08 lineto
+32.59 27.30 lineto
+35.25 25.62 lineto
+37.86 24.03 lineto
+40.42 22.53 lineto
+42.93 21.13 lineto
+45.39 19.82 lineto
+47.80 18.60 lineto
+50.21 17.44 lineto
+52.64 16.34 lineto
+55.08 15.28 lineto
+57.54 14.27 lineto
+60.00 13.32 lineto
+62.49 12.41 lineto
+64.99 11.56 lineto
+67.50 10.75 lineto
+70.03 10.00 lineto
+72.57 9.29 lineto
+75.12 8.64 lineto
+77.70 8.03 lineto
+80.28 7.48 lineto
+82.88 6.98 lineto
+85.49 6.52 lineto
+88.12 6.12 lineto
+90.77 5.76 lineto
+93.46 5.41 lineto
+96.19 5.08 lineto
+98.97 4.75 lineto
+101.79 4.44 lineto
+104.65 4.13 lineto
+107.56 3.84 lineto
+110.51 3.56 lineto
+113.50 3.29 lineto
+116.54 3.02 lineto
+119.62 2.77 lineto
+122.74 2.54 lineto
+125.91 2.31 lineto
+129.11 2.09 lineto
+132.37 1.88 lineto
+135.66 1.69 lineto
+139.00 1.50 lineto
+142.35 1.33 lineto
+145.68 1.20 lineto
+149.00 1.09 lineto
+152.30 1.01 lineto
+155.57 0.96 lineto
+158.84 0.94 lineto
+162.08 0.95 lineto
+165.30 0.98 lineto
+168.51 1.05 lineto
+171.70 1.14 lineto
+174.87 1.26 lineto
+178.02 1.41 lineto
+181.16 1.59 lineto
+184.28 1.80 lineto
+187.38 2.04 lineto
+190.46 2.31 lineto
+193.51 2.60 lineto
+196.49 2.94 lineto
+199.38 3.34 lineto
+202.16 3.78 lineto
+204.85 4.27 lineto
+207.44 4.82 lineto
+209.93 5.41 lineto
+212.33 6.06 lineto
+214.63 6.75 lineto
+216.83 7.50 lineto
+218.93 8.29 lineto
+220.94 9.14 lineto
+222.85 10.03 lineto
+224.66 10.98 lineto
+226.38 11.98 lineto
+227.99 13.02 lineto
+229.51 14.12 lineto
+230.95 15.29 lineto
+232.36 16.58 lineto
+233.74 17.99 lineto
+235.09 19.53 lineto
+236.41 21.19 lineto
+237.70 22.98 lineto
+238.96 24.90 lineto
+240.19 26.94 lineto
+241.40 29.11 lineto
+242.57 31.41 lineto
+243.72 33.83 lineto
+244.84 36.38 lineto
+245.93 39.05 lineto
+246.99 41.85 lineto
+248.02 44.77 lineto
+249.03 47.82 lineto
+250.00 50.99 lineto
+stroke grestore
+
+1 setlinewidth 332 141 moveto 23 141 lineto stroke
+23 -63 moveto 23 141 lineto stroke
+332 -63 moveto 23 -63 lineto stroke
+332 -63 moveto 332 141 lineto stroke
+gsave % S 47 48 104 62 7 1 1 manager
+47 104 add 2 div 48 62 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(manager) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(manager) show grestore
+
+gsave % S 59 72 86 86 7 1 1 lock
+59 86 add 2 div 72 86 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(lock) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(lock) show grestore
+
+125 -6 moveto 125 120 lineto stroke
+125 -6 moveto 32 -6 lineto stroke
+32 -6 moveto 32 120 lineto stroke
+125 120 moveto 32 120 lineto stroke
+gsave % S 251 66 296 80 7 1 1 server
+251 296 add 2 div 66 80 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(server) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(server) show grestore
+
+gsave % S 251 87 281 101 7 1 1 data
+251 281 add 2 div 87 101 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(data) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(data) show grestore
+
+gsave % S 248 6 291 20 7 1 1 library
+248 291 add 2 div 6 20 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(library) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(library) show grestore
+
+323 33 moveto 230 33 lineto stroke
+323 120 moveto 230 120 lineto stroke
+230 -6 moveto 230 120 lineto stroke
+323 -6 moveto 230 -6 lineto stroke
+323 -6 moveto 323 120 lineto stroke
+gsave % S 152 66 197 80 7 1 1 server
+152 197 add 2 div 66 80 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(server) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(server) show grestore
+
+gsave % S 152 87 182 101 7 1 1 data
+152 182 add 2 div 87 101 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(data) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(data) show grestore
+
+gsave % S 149 6 192 20 7 1 1 library
+149 192 add 2 div 6 20 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(library) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(library) show grestore
+
+224 33 moveto 131 33 lineto stroke
+224 120 moveto 131 120 lineto stroke
+131 -6 moveto 131 120 lineto stroke
+224 -6 moveto 131 -6 lineto stroke
+224 -6 moveto 224 120 lineto stroke
+-130 -6 moveto -130 120 lineto stroke
+-130 -6 moveto -223 -6 lineto stroke
+-223 -6 moveto -223 120 lineto stroke
+-130 120 moveto -223 120 lineto stroke
+-130 33 moveto -223 33 lineto stroke
+gsave % S -205 6 -162 20 7 1 1 library
+-205 -162 add 2 div 6 20 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(library) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(library) show grestore
+
+gsave % S -202 87 -172 101 7 1 1 data
+-202 -172 add 2 div 87 101 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(data) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(data) show grestore
+
+gsave % S -202 66 -157 80 7 1 1 server
+-202 -157 add 2 div 66 80 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(server) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(server) show grestore
+
+-31 -6 moveto -31 120 lineto stroke
+-31 -6 moveto -124 -6 lineto stroke
+-124 -6 moveto -124 120 lineto stroke
+-31 120 moveto -124 120 lineto stroke
+-31 33 moveto -124 33 lineto stroke
+gsave % S -106 6 -63 20 7 1 1 library
+-106 -63 add 2 div 6 20 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(library) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(library) show grestore
+
+gsave % S -103 87 -73 101 7 1 1 data
+-103 -73 add 2 div 87 101 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(data) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(data) show grestore
+
+gsave % S -103 66 -58 80 7 1 1 server
+-103 -58 add 2 div 66 80 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(server) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(server) show grestore
+
+-229 120 moveto -322 120 lineto stroke
+-322 -6 moveto -322 120 lineto stroke
+-229 -6 moveto -322 -6 lineto stroke
+-229 -6 moveto -229 120 lineto stroke
+gsave % S -295 72 -268 86 7 1 1 lock
+-295 -268 add 2 div 72 86 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(lock) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(lock) show grestore
+
+gsave % S -307 48 -250 62 7 1 1 manager
+-307 -250 add 2 div 48 62 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(manager) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(manager) show grestore
+
+-22 -63 moveto -22 141 lineto stroke
+-22 -63 moveto -331 -63 lineto stroke
+-331 -63 moveto -331 141 lineto stroke
+-22 141 moveto -331 141 lineto stroke
+gsave % S 263 -51 311 -37 7 1 1 node 2
+263 311 add 2 div -51 -37 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(node 2) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(node 2) show grestore
+
+gsave % S -316 -48 -268 -34 7 1 1 node 1
+-316 -268 add 2 div -48 -34 add 2 div translate
+/cmat matrix currentmatrix def stringmat
+1 0.686 div 1 0.679 div scale %  #scale#  for inserter
+font7 setfont
+(node 1) stringwidth pop 8.571428
+exch 2 div neg exch 2 div neg moveto
+(node 1) show grestore
+
+gsave 1 setlinewidth -271 -34 translate
+0.00 27.00 moveto
+1.20 25.76 lineto
+2.39 24.54 lineto
+3.57 23.37 lineto
+4.74 22.22 lineto
+5.91 21.10 lineto
+7.07 20.02 lineto
+8.22 18.97 lineto
+9.37 17.96 lineto
+10.51 16.97 lineto
+11.64 16.02 lineto
+12.76 15.10 lineto
+13.88 14.21 lineto
+14.99 13.36 lineto
+16.09 12.54 lineto
+17.19 11.74 lineto
+18.28 10.99 lineto
+19.36 10.26 lineto
+20.43 9.57 lineto
+21.50 8.91 lineto
+22.56 8.28 lineto
+23.61 7.68 lineto
+24.66 7.12 lineto
+25.70 6.59 lineto
+26.73 6.09 lineto
+27.75 5.63 lineto
+28.77 5.19 lineto
+29.78 4.79 lineto
+30.78 4.42 lineto
+31.77 4.08 lineto
+32.76 3.78 lineto
+33.74 3.51 lineto
+34.71 3.27 lineto
+35.68 3.06 lineto
+36.64 2.88 lineto
+37.59 2.72 lineto
+38.54 2.57 lineto
+39.48 2.44 lineto
+40.42 2.33 lineto
+41.35 2.23 lineto
+42.28 2.14 lineto
+43.20 2.07 lineto
+44.12 2.01 lineto
+45.03 1.97 lineto
+45.93 1.95 lineto
+46.83 1.94 lineto
+47.73 1.95 lineto
+48.62 1.97 lineto
+49.50 2.01 lineto
+50.38 2.06 lineto
+51.25 2.13 lineto
+52.12 2.21 lineto
+52.98 2.31 lineto
+53.84 2.42 lineto
+54.69 2.55 lineto
+55.53 2.69 lineto
+56.37 2.85 lineto
+57.21 3.02 lineto
+58.04 3.21 lineto
+58.86 3.42 lineto
+59.68 3.64 lineto
+60.49 3.88 lineto
+61.30 4.13 lineto
+62.10 4.39 lineto
+62.90 4.67 lineto
+63.69 4.97 lineto
+64.48 5.28 lineto
+65.26 5.61 lineto
+66.03 5.96 lineto
+66.80 6.32 lineto
+67.55 6.70 lineto
+68.30 7.11 lineto
+69.03 7.53 lineto
+69.76 7.97 lineto
+70.48 8.43 lineto
+71.19 8.91 lineto
+71.89 9.40 lineto
+72.58 9.92 lineto
+73.26 10.45 lineto
+73.94 11.01 lineto
+74.60 11.58 lineto
+75.26 12.17 lineto
+75.90 12.78 lineto
+76.54 13.41 lineto
+77.17 14.06 lineto
+77.79 14.73 lineto
+78.40 15.41 lineto
+79.00 16.12 lineto
+79.59 16.84 lineto
+80.18 17.58 lineto
+80.75 18.34 lineto
+81.32 19.13 lineto
+81.87 19.92 lineto
+82.42 20.74 lineto
+82.96 21.58 lineto
+83.49 22.44 lineto
+84.01 23.31 lineto
+84.52 24.21 lineto
+85.02 25.12 lineto
+85.52 26.05 lineto
+86.00 27.00 lineto
+stroke grestore
+
+
+showpage  %  ### #  
+%%Trailer
+%%DocumentFonts: TimesRoman Courier
+%%Pages: 1
+%%BoundingBox: 15 321 534 492
+% dp BoundingBox: -425 -111 333 142
+% Height: 2.37 inches; 6.01 cm.
+% Width: 7.20 inches; 18.29 cm.
+
+%%EndDocument
+ GE 10 SS 
+32500 44744 MT
+(lock. That)
+268 W( is, the first server to cache a)
+9 W( lock will retain)8 W
+9 SS 
+7344 45347 MT
+(Data server)
+37 W( A uses distributed locks from nodes 1 and)36 W
+10 SS 
+32500 45849 MT
+(the cached lock)
+230 W( \050until it is requested by a different)231 W
+9 SS 
+7344 46361 MT
+(2. Data)
+499 W( servers B and)
+137 W( D use distributed locks from)138 W
+10 SS 
+32500 46954 MT
+(transaction family in another server,)
+182 W( or until another)181 W
+9 SS 
+7344 47375 MT
+(node 2.  Data server C uses only local locks.)SH
+10 SS 
+32500 48059 MT
+(server requests the lock and specifies a policy of)SH
+/Times-Bold SF
+52134 XM
+(last)SH
+/Times-Roman SF
+(\051.)SH
+9 /Times-Bold AF
+6884 48843 MT
+(Figure 2-1:)SH
+/Times-Roman SF
+11609 XM
+(Two nodes and their associated lock managers)SH
+648 50 34429 49042 UL
+10 /Symbol AF
+31790 49496 MT
+(\267)SH
+/Times-Bold SF
+32500 XM
+(last)SH
+/Times-Roman SF
+35506 XM
+(if a server requests a lock cached)
+179 W( by another)180 W
+6544 50543 MT
+(Each node has exactly one lock manager)
+64 W( process.  The)63 W
+32500 50601 MT
+(server, the new server)
+244 W( will cache the lock, and the)243 W
+32500 51706 MT
+(server which cached the)
+68 W( lock originally will no longer)69 W
+5544 51740 MT
+(lock manager process coordinates)
+175 W( the use of those lock)176 W
+32500 52811 MT
+(have it cached.)
+5 W( That)
+258 W( is, the last server to request a lock)4 W
+5544 52937 MT
+(spaces pre-assigned to the)
+33 W( node.  In response to a server's)32 W
+32500 53916 MT
+(will retain the cached lock.)SH
+5544 54134 MT
+(lock request on)
+217 W( behalf of a given transaction, the lock)218 W
+31500 55113 MT
+(The latter three policies)
+328 W( \050)329 W
+/Times-Bold SF
+(release)SH
+/Times-Roman SF
+(,)SH
+/Times-Bold SF
+46638 XM
+(first)SH
+/Times-Roman SF
+(, and)329 W
+/Times-Bold SF
+51267 XM
+(last)SH
+/Times-Roman SF
+(\051 are)329 W
+5544 55331 MT
+(manager may decide to)
+25 W( grant the lock to the server for the)24 W
+31500 56310 MT
+(equivalent for read-mode locks, and for write-mode locks)50 W
+5544 56528 MT
+(duration of the requesting transaction.  \050The server)
+165 W( will)166 W
+31500 57507 MT
+(when the requesting transaction is not in)
+66 W( the same family)67 W
+5544 57725 MT
+(contact the manager when the transaction completes.\051  Or,)16 W
+31500 58704 MT
+(as the transaction holding)
+180 W( the lock.  \050In the latter case,)179 W
+5544 58922 MT
+(to eliminate future)
+81 W( requests, the lock manager may allow)82 W
+31500 59901 MT
+(there is a conflict, and)
+227 W( the requesting transaction must)228 W
+5544 60119 MT
+(the server to)132 W
+/Times-Italic SF
+11133 XM
+(cache)SH
+/Times-Roman SF
+13847 XM
+(the lock, giving it permission for an)132 W
+31500 61098 MT
+(wait until the)
+55 W( holder releases the lock.  When the holding)54 W
+5544 61316 MT
+(unspecified period of time to process lock requests by)231 W
+5544 62513 MT
+(subsequent transactions.)
+336 W( In)
+920 W( this latter case, the lock)335 W
+5544 63710 MT
+(manager uses a)276 W
+/Times-Italic SF
+12731 XM
+(call-back)SH
+/Times-Roman SF
+16978 XM
+(to the server to request the)277 W
+10800 50 31500 63884 UL
+5544 64907 MT
+(return of the cached lock when another server needs it.)SH
+6 SS 
+31500 65223 MT
+(1)SH
+8 SS 
+31800 65532 MT
+(A lock is granted to a transaction,)
+46 W( which may involve multiple threads in)47 W
+10 SS 
+6544 66403 MT
+(Each server includes a copy of the)
+33 W( lock library module.)32 W
+8 SS 
+31500 66456 MT
+(one or several servers.  Since these threads are part of the same transaction,)5 W
+31500 67380 MT
+(they may hold)
+245 W( a write-mode lock simultaneously, which may violate)246 W
+10 SS 
+5544 67600 MT
+(The lock library module)
+180 W( is responsible for coordinating)181 W
+8 SS 
+31500 68304 MT
+(serializability unless each thread runs as a nested subtransaction.)
+184 W( The)567 W
+10 SS 
+5544 68797 MT
+(the use of locks by transactions running in the server.  In)67 W
+8 SS 
+31500 69228 MT
+(write-mode lock is held by only one of these subtransactions at a time.)
+4 W( But)210 W
+10 SS 
+5544 69994 MT
+(response to a transaction's lock)
+109 W( request, the library must)110 W
+8 SS 
+31500 70152 MT
+(in the Camelot)
+103 W( system, when a subtransaction commits, its locks are not)102 W
+31500 71076 MT
+(released, but assigned)
+59 W( to its parent \050``anti-inheritance''\051.  Thus, the parent)60 W
+10 SS 
+5544 71191 MT
+(decide whether it may grant the request by itself \050when)153 W
+8 SS 
+31500 72000 MT
+(may hold the write-mode lock at the same time as each one of its children.)SH
+10 SS 
+30100 75600 MT
+(24)SH
+ES
+%%Page: 25 4
+BS
+0 SI
+10 /Times-Roman AF
+5544 7886 MT
+(transaction releases)
+149 W( the lock, it will be uncached by the)150 W
+31500 XM
+(requests until it succeeds in)
+58 W( contacting the server caching)57 W
+5544 9083 MT
+(server, and the requesting transaction will be)
+96 W( granted the)95 W
+31500 XM
+(the lock.)SH
+5544 10280 MT
+(lock.\051)SH
+/Times-Bold SF
+39283 10833 MT
+(3. Implementation)SH
+/Times-Roman SF
+6544 11776 MT
+(Each lock request that)
+319 W( a server makes to the lock)320 W
+32500 12030 MT
+(The distributed lock manager)
+61 W( has been implemented in)62 W
+5544 12973 MT
+(manager includes a)
+200 W( lock policy, so that each lock may)199 W
+31500 13227 MT
+(the Camelot environment.)
+461 W( The)
+1170 W( Camelot distributed)460 W
+5544 14170 MT
+(have a different policy, and)
+242 W( the policy may vary over)243 W
+31500 14424 MT
+(transaction facility provides)
+425 W( recoverable storage \050i.e.,)426 W
+5544 15367 MT
+(time. If)
+384 W( two servers)
+67 W( specify conflicting lock policies, the)66 W
+31500 15621 MT
+(stable storage that can be modified)
+189 W( transactionally\051 and)188 W
+5544 16564 MT
+(lock manager should resolve the conflict)
+134 W( in favor of the)135 W
+31500 16818 MT
+(transaction management.)
+57 W( The)
+365 W( Camelot library provides a)58 W
+5544 17761 MT
+(server specifying)
+348 W( the policy with the highest priority)347 W
+31500 18015 MT
+(standard framework)
+170 W( for the construction of)169 W
+/Times-Italic SF
+49955 XM
+(applications)SH
+/Times-Roman SF
+5544 18958 MT
+(\050)SH
+/Times-Bold SF
+(never)SH
+/Times-Roman SF
+8695 XM
+(has the lowest priority,)
+180 W( and)181 W
+/Times-Bold SF
+20707 XM
+(last)SH
+/Times-Roman SF
+22638 XM
+(has the highest)181 W
+31500 19212 MT
+(\050which provide a user)
+171 W( interface and act only as clients\051)172 W
+5544 20155 MT
+(priority\051. Presently,)
+250 W( this scheme is not fully implemented.)SH
+31500 20409 MT
+(and)SH
+/Times-Italic SF
+33349 XM
+(data servers)155 W
+/Times-Roman SF
+38825 XM
+(\050which modify stable)
+155 W( storage and may)154 W
+31500 21606 MT
+(act as clients or servers\051, and includes)
+94 W( routines to handle)95 W
+6544 21651 MT
+(The server may also specify)
+67 W( how many locks it wishes)66 W
+31500 22803 MT
+(read/write locking within a data server.)SH
+5544 22848 MT
+(to cache)
+170 W( per lock space.  This limit is evaluated lazily;)171 W
+5544 24045 MT
+(that is, the server library)
+138 W( consults the limit only when a)137 W
+/Times-Bold SF
+31750 24553 MT
+(Communication)SH
+/Times-Roman SF
+5544 25242 MT
+(transaction unlocks a lock.)
+1 W( If)
+253 W( the limit has been exceeded,)2 W
+32500 25750 MT
+(Camelot runs with the support)
+148 W( of the Mach operating)147 W
+5544 26439 MT
+(the library will uncache the)
+113 W( lock as it is unlocked.  This)112 W
+31500 26947 MT
+(system, and uses Mach messages to perform)
+35 W( RPCs.  Most)36 W
+5544 27636 MT
+(scheme is incorrect because it fails to)
+91 W( uncache locks that)92 W
+31500 28144 MT
+(communication between application)
+637 W( and server, or)636 W
+5544 28833 MT
+(have been unused for long time periods.  However, it)
+35 W( was)34 W
+31500 29341 MT
+(between server and server, uses)
+94 W( a Camelot variant of the)95 W
+5544 30030 MT
+(simpler to implement than a full LRU for)
+65 W( the lock cache,)66 W
+31500 30538 MT
+(Mach RPC)
+1026 W( called a SERVER_CALL.  The)1025 W
+5544 31227 MT
+(and has no adverse effect on the performance)
+301 W( results)300 W
+31500 31735 MT
+(SERVER_CALL embeds additional)225 W
+/Times-Italic SF
+46925 XM
+(history)SH
+/Times-Roman SF
+50178 XM
+(information)SH
+5544 32424 MT
+(reported in Section 4.)SH
+31500 32932 MT
+(in the RPC)
+330 W( message in order to track the spread of)329 W
+31500 34129 MT
+(transactions from node to node, and)
+137 W( causes the message)138 W
+/Times-Bold SF
+5794 34174 MT
+(Failures)SH
+/Times-Roman SF
+31500 35326 MT
+(recipient to join the sender's transaction and)
+23 W( to participate)22 W
+6544 35371 MT
+(To gain speed, most of the state transitions made)
+15 W( by the)16 W
+31500 36523 MT
+(in the two-phase commit protocol at)
+356 W( the end of the)357 W
+5544 36568 MT
+(distributed lock manager are recorded only in volatile)276 W
+31500 37720 MT
+(transaction. To)
+650 W( avoid the overhead of)
+200 W( distributed two-)199 W
+5544 37765 MT
+(storage. Parts)
+576 W( of this storage are lost when a server)
+163 W( or)164 W
+31500 38917 MT
+(phase commit, and the)
+45 W( embedded history information, the)46 W
+5544 38962 MT
+(lock manager)
+114 W( crashes.  The lock manager can restore its)113 W
+31500 40114 MT
+(distributed lock manager communicates via the simpler)206 W
+5544 40159 MT
+(volatile state)
+4 W( by contacting each of the data servers known)5 W
+31500 41311 MT
+(Mach RPC rather than the Camelot SERVER_CALL.)SH
+5544 41356 MT
+(to have obtained locks.)
+454 W( Therefore,)
+1156 W( when the lock)453 W
+5544 42553 MT
+(manager first)
+123 W( encounters a server, it records the server's)124 W
+32500 42807 MT
+(The communication)
+719 W( interface between the lock)720 W
+5544 43750 MT
+(name in stable storage.)SH
+31500 44004 MT
+(manager and the server library)
+101 W( is listed in the Appendix.)100 W
+31500 45201 MT
+(For example,)
+155 W( the library may attempt to obtain a write-)156 W
+6544 45246 MT
+(As mentioned)
+34 W( previously, the lock manager uses a call-)33 W
+31500 46398 MT
+(mode lock on behalf of transaction)280 W
+/Courier SF
+47344 XM
+(tid)SH
+/Times-Roman SF
+49674 XM
+(via the call:)280 W
+5544 46443 MT
+(back to request a server to)
+31 W( return a cached lock.  This call)32 W
+/Courier SF
+31500 47595 MT
+(HS_Lock\050hsPort,lockName,)SH
+/Times-Roman SF
+5544 47640 MT
+(will fail when the server or the processor)
+52 W( where it resides)51 W
+/Courier SF
+31500 48792 MT
+(LOCK_MODE_WRITE,LOCK_CACHE_FIRST,tid,)SH
+/Times-Roman SF
+5544 48837 MT
+(has crashed, or if there)
+373 W( is a communications failure)374 W
+/Courier SF
+31500 49989 MT
+(server,&cached\051)SH
+/Times-Roman SF
+(. The)
+274 W( name of the lock is)
+12 W( contained)13 W
+5544 50034 MT
+(\050perhaps a network partition\051.)
+53 W( In)
+355 W( the case of a crash, it is)52 W
+31500 51186 MT
+(in variable)166 W
+/Courier SF
+36331 XM
+(lockName)SH
+/Times-Roman SF
+(. The)
+582 W( library is selecting)
+166 W( a lock)165 W
+5544 51231 MT
+(safe for the lock manager to grant a)
+226 W( cached lock to a)227 W
+31500 52383 MT
+(policy of)112 W
+/Times-Bold SF
+35557 XM
+(first)SH
+/Times-Roman SF
+(. The)
+474 W( call)
+112 W( is directed to the lock manager)113 W
+5544 52428 MT
+(different server, as long as there are)
+513 W( no prepared)512 W
+31500 53580 MT
+(identified by the Mach port)378 W
+/Courier SF
+44583 XM
+(hsPort)SH
+/Times-Roman SF
+(; the library is)378 W
+5544 53625 MT
+(transactions holding the cached)
+347 W( lock.  Therefore, the)348 W
+31500 54777 MT
+(providing the)
+154 W( server name for call-backs in the variable)155 W
+5544 54822 MT
+(server presents a list of locks)
+50 W( to the lock manager when a)49 W
+/Courier SF
+31500 55974 MT
+(server)SH
+/Times-Roman SF
+(. The)
+360 W( lock)
+55 W( manager will return a value of)54 W
+/Courier SF
+52500 XM
+(true)SH
+/Times-Roman SF
+5544 56019 MT
+(transaction enters the prepared state, and notifies the)
+54 W( lock)55 W
+31500 57171 MT
+(in)SH
+/Courier SF
+32608 XM
+(cached)SH
+/Times-Roman SF
+36538 XM
+(if the server library is)
+80 W( permitted to cache the)81 W
+5544 57216 MT
+(manager when such a transaction commits or aborts.)
+39 W( The)326 W
+31500 58368 MT
+(lock.)SH
+5544 58413 MT
+(lock manager records this list of locks in stable)
+4 W( storage, so)5 W
+5544 59610 MT
+(that it will not)
+176 W( accidentally give out a lock if it should)175 W
+/Times-Bold SF
+31750 60118 MT
+(Data structures)SH
+/Times-Roman SF
+5544 60807 MT
+(crash and recover while a server is down.)SH
+32500 61315 MT
+(The)SH
+/Times-Italic SF
+34523 XM
+(cache status)218 W
+/Times-Roman SF
+40124 XM
+(indicates the mode \050read, write, or)217 W
+6544 62303 MT
+(In the case of a network partition, it would be)
+132 W( unsafe)133 W
+31500 62512 MT
+(none\051 in which)
+17 W( a server has cached a lock.  When a server)18 W
+5544 63500 MT
+(for the lock manager to grant a cached lock)
+60 W( to a different)59 W
+31500 63709 MT
+(has a write-mode lock cached,)
+27 W( it does not communicate at)26 W
+5544 64697 MT
+(server, because two transactions could then)
+12 W( be holding the)13 W
+31500 64906 MT
+(all with the lock manager to grant a lock.)
+59 W( When)
+369 W( a server)60 W
+5544 65894 MT
+(lock in conflicting modes, and serializability would be)232 W
+31500 66103 MT
+(has a)
+114 W( read-mode lock cached, it may grant read requests)113 W
+5544 67091 MT
+(violated. In)
+266 W( the present implementation, the lock manager)9 W
+31500 67300 MT
+(on its own, but must forward write requests to the)
+154 W( lock)155 W
+5544 68288 MT
+(treats communication failures as crashes,)
+201 W( and thus may)200 W
+31500 68497 MT
+(manager. When)
+280 W( a)
+15 W( server does not have the lock cached, it)14 W
+5544 69485 MT
+(allow serializability to be violated)
+173 W( if failure is due to a)174 W
+31500 69694 MT
+(must forward all requests to the lock manager.  It is)282 W
+5544 70682 MT
+(network partition.  This violation of)
+68 W( serializability can be)67 W
+31500 70891 MT
+(possible for a server)
+68 W( to have a lock cached in read mode,)67 W
+5544 71879 MT
+(prevented by requiring the)
+182 W( lock manager to retry failed)183 W
+30100 75600 MT
+(25)SH
+ES
+%%Page: 26 5
+BS
+0 SI
+10 /Times-Roman AF
+5544 7886 MT
+(while several)
+126 W( transactions running in the server hold the)127 W
+31500 XM
+(the locks are chosen at random out of a)
+186 W( set of 16,384.)185 W
+5544 9083 MT
+(lock in write mode.)SH
+31500 XM
+(The transactions are repeated many)
+307 W( times so that the)308 W
+31500 10280 MT
+(measurements for each benchmark)
+49 W( are based on a total of)48 W
+6544 10579 MT
+(Both the lock manager process and the)
+162 W( server library)161 W
+31500 11477 MT
+(50,000 lock requests.)SH
+5544 11776 MT
+(use hash tables of lock records, indexed by lock name,)
+57 W( to)58 W
+5544 12973 MT
+(keep track of active locks.)
+19 W( \050A)
+287 W( lock is active if it is cached)18 W
+32500 XM
+(The benchmarks vary along three dimensions.)SH
+32000 14078 MT
+(1.)SH
+33000 XM
+(By obtaining 50, 100, or)
+106 W( 500 locks per transaction,)107 W
+5544 14170 MT
+(by a server or)
+10 W( held by a transaction.\051  In the server library,)11 W
+33000 15183 MT
+(the cost per lock can be)
+69 W( computed independently of)68 W
+5544 15367 MT
+(each lock record indicates the cache status,)
+27 W( and includes a)26 W
+33000 16288 MT
+(the per transaction overhead.  The)
+118 W( benchmark time)119 W
+5544 16564 MT
+(list of transactions holding the lock, and a list)
+458 W( of)459 W
+33000 17393 MT
+(is expected to)
+118 W( increase linearly with the number of)117 W
+5544 17761 MT
+(transactions waiting for the lock.)
+172 W( In)
+592 W( the lock manager,)171 W
+33000 18498 MT
+(locks obtained until the hash)
+125 W( tables are so full that)126 W
+5544 18958 MT
+(each lock record includes a list of servers)
+7 W( caching the lock)8 W
+33000 19603 MT
+(collisions become)
+1010 W( significant.  For these)1009 W
+5544 20155 MT
+(\050and the cache status for each server\051,)
+564 W( a list of)563 W
+33000 20708 MT
+(benchmarks, the hash table size was set at 8209.  A)66 W
+5544 21352 MT
+(server/transaction pairs holding the lock, and a list)
+269 W( of)270 W
+33000 21813 MT
+(regression over each set of 3 points \05050,)
+163 W( 100, 500)162 W
+5544 22549 MT
+(server/transaction pairs waiting for the lock.)SH
+33000 22918 MT
+(locks\051 indicates that the linear model)
+23 W( is correct, with)24 W
+33000 24023 MT
+(a correlation coefficient of greater than 0.9999.)SH
+6544 24045 MT
+(The lock hash)
+79 W( tables are maintained in volatile storage)78 W
+5544 25242 MT
+(for speed.  Some data is duplicated by)
+1 W( the lock manager in)2 W
+32000 25460 MT
+(2.)SH
+33000 XM
+(Each transaction obtains a mixture of both)
+41 W( local and)40 W
+5544 26439 MT
+(recoverable storage, but,)
+559 W( because of the additional)558 W
+33000 26565 MT
+(distributed locks \050characterized by the)
+36 W( percentage of)37 W
+5544 27636 MT
+(overhead required)
+736 W( to modify recoverable storage,)737 W
+33000 27670 MT
+(the locks that are local\051.)
+136 W( The)
+520 W( cost of a distributed)135 W
+33000 28775 MT
+(lock is measured)
+165 W( by a benchmark that obtains 0%)166 W
+5544 28833 MT
+(modifications to this storage are minimized.  When a)276 W
+33000 29880 MT
+(local locks; the)
+33 W( cost of a local lock is measured by a)32 W
+5544 30030 MT
+(transaction enters the prepared state,)
+674 W( each server)675 W
+33000 30985 MT
+(benchmark that obtains 100% local locks.)
+459 W( A)1169 W
+5544 31227 MT
+(participating in)
+281 W( the transaction notifies the appropriate)280 W
+33000 32090 MT
+(benchmark that)
+83 W( obtains 80% local locks is included)82 W
+5544 32424 MT
+(lock managers of write locks held by the transaction.  The)21 W
+33000 33195 MT
+(to verify the overall models given)
+68 W( by Equations 4-1)69 W
+5544 33621 MT
+(lock manager records)
+232 W( this list in a recoverable storage)231 W
+33000 34300 MT
+(and 4-2.)SH
+5544 34818 MT
+(hash table, indexed by)
+41 W( server/transaction pair.  This list is)42 W
+32000 35737 MT
+(3.)SH
+33000 XM
+(The effects)
+431 W( of the cache can be measured by)430 W
+5544 36015 MT
+(duplicated in the lock hash table in)
+116 W( volatile storage, but,)115 W
+33000 36842 MT
+(selecting lock policies of)201 W
+/Times-Bold SF
+44026 XM
+(first)SH
+/Times-Roman SF
+46255 XM
+(\050caching\051 or)202 W
+/Times-Bold SF
+51768 XM
+(never)SH
+/Times-Roman SF
+5544 37212 MT
+(unlike the volatile table, it will)
+31 W( survive a crash of the lock)32 W
+33000 37947 MT
+(\050no caching\051.  The)
+318 W( cache size was set at 8192,)317 W
+5544 38409 MT
+(manager. When)
+994 W( the transaction commits, the server)371 W
+33000 39052 MT
+(making the expected \050and measured\051 hit ratio 50%)138 W
+5544 39606 MT
+(notifies the lock manager, which then removes the)
+165 W( data)166 W
+33000 40157 MT
+(for distributed locks.)SH
+5544 40803 MT
+(from both recoverable and volatile hash tables.)SH
+32500 41653 MT
+(Table 4-1 lists the times per transaction)
+752 W( \050in)751 W
+6544 42299 MT
+(The lock manager also maintains a recoverable storage)62 W
+31500 42850 MT
+(milliseconds\051 for these benchmarks)
+312 W( using write locks.)313 W
+5544 43496 MT
+(hash table of server)
+279 W( names.  When the lock manager)280 W
+31500 44047 MT
+(The locks are selected randomly from the lock)
+141 W( space of)140 W
+5544 44693 MT
+(receives a request from a server, it searches for)
+166 W( the the)165 W
+31500 45244 MT
+(16,384 locks.  The benchmarks)
+282 W( were run on an IBM)283 W
+5544 45890 MT
+(server's name in the table,)
+26 W( and inserts the name if it is not)27 W
+31500 46441 MT
+(RT/PC APC workstation with 12 megabytes)
+105 W( of memory,)104 W
+5544 47087 MT
+(already present.  If the lock manager crashes)
+485 W( and)484 W
+31500 47638 MT
+(using release 0.99\05075\051 of)
+636 W( the Camelot distributed)637 W
+5544 48284 MT
+(recovers, it)
+64 W( scans the recoverable server name hash table,)65 W
+31500 48835 MT
+(transaction facility and release CS5g of the Mach)522 W
+5544 49481 MT
+(and contacts each server to obtain the data)
+213 W( it needs to)212 W
+31500 50032 MT
+(operating system.  The benchmarks were written in the)179 W
+5544 50678 MT
+(reconstruct the volatile lock hash table.)SH
+31500 51229 MT
+(Camelot Performance Analyzer language)
+220 W( [22],)
+SH( which is)220 W
+31500 52426 MT
+(executed by an interpreter.  The interpreter imposes)
+193 W( an)194 W
+/Times-Bold SF
+13967 52428 MT
+(4. Performance)SH
+/Times-Roman SF
+31500 53623 MT
+(overhead of approximately 80% on all of)
+665 W( these)664 W
+6544 53625 MT
+(To describe the performance of the distributed)
+268 W( lock)269 W
+8 SS 
+49968 54475 MT
+(2)SH
+10 SS 
+31500 54820 MT
+(benchmarks when compared to native C code.)SH
+5544 54822 MT
+(manager, we measure the elapsed)
+416 W( time of a set of)415 W
+5544 56019 MT
+(carefully chosen benchmarks.)
+109 W( Based)
+470 W( on a knowledge of)110 W
+32500 56316 MT
+(The following)
+108 W( equation models these times within 2%)109 W
+5544 57216 MT
+(the construction of the)
+249 W( lock manager, it is possible to)248 W
+31500 57513 MT
+(of the actual values:)SH
+5544 58413 MT
+(deduce from these benchmarks)
+118 W( several component costs,)119 W
+7 SS 
+40555 58763 MT
+(.)SH
+44760 XM
+(.)SH
+47085 XM
+(.)SH
+50110 XM
+(_)SH
+52385 XM
+(.)SH
+9 /Times-Italic AF
+32400 59090 MT
+(T)SH
+/Times-Roman SF
+33592 XM
+(=)SH
+/Times-Italic SF
+34325 XM
+(t)SH
+/Times-Roman SF
+35267 XM
+(+)SH
+/Times-Italic SF
+36000 XM
+(t)SH
+/Times-Roman SF
+37292 XM
+(+)SH
+/Times-Bold SF
+38025 XM
+(local)SH
+/Times-Italic SF
+40955 XM
+(l)SH
+/Times-Roman SF
+41897 XM
+(+)SH
+/Times-Bold SF
+42630 XM
+(dist)SH
+/Times-Roman SF
+45160 XM
+([)SH
+/Times-Bold SF
+(hits)SH
+/Times-Italic SF
+47485 XM
+(h)SH
+/Times-Roman SF
+48627 XM
+(+ \0501)SH
+/Times-Bold SF
+50460 XM
+(hits)SH
+/Times-Roman SF
+(\051)SH
+/Times-Italic SF
+52785 XM
+(m)SH
+/Times-Roman SF
+53902 XM
+(])SH
+7 /Times-Bold AF
+39825 59413 MT
+(w)SH
+44030 XM
+(w)SH
+/Times-Italic SF
+32900 59415 MT
+(w)SH
+34575 XM
+(w)SH
+36250 XM
+(dw)SH
+41205 XM
+(w)SH
+47935 XM
+(w)SH
+53435 XM
+(w)SH
+10 /Times-Roman AF
+5544 59610 MT
+(and describe a)
+239 W( model that predicts the performance of)238 W
+9 SS 
+52956 60177 MT
+([4-1])SH
+10 SS 
+5544 60807 MT
+(other benchmarks.  The component costs can)
+276 W( then be)277 W
+31500 61633 MT
+(where:)SH
+5544 62004 MT
+(varied to estimate the performance of the lock)
+162 W( manager)161 W
+/Symbol SF
+31790 62738 MT
+(\267)SH
+/Times-Italic SF
+32500 XM
+(T)SH
+/Times-Roman SF
+33944 XM
+(is the total time in ms. per transaction using)
+104 W( write)103 W
+8 /Times-Italic AF
+33056 63080 MT
+(w)SH
+10 /Times-Roman AF
+5544 63201 MT
+(design in other environments.)SH
+32500 63931 MT
+(locks.)SH
+/Times-Bold SF
+5794 64951 MT
+(Single server)SH
+/Times-Roman SF
+6544 66148 MT
+(A single server which)
+8 W( obtains both local and distributed)9 W
+10800 50 31500 66656 UL
+5544 67345 MT
+(locks can)
+86 W( be used to measure the overhead of distributed)85 W
+6 SS 
+31500 67995 MT
+(2)SH
+8 SS 
+31800 68304 MT
+(Additional overhead is imposed by tracing)
+204 W( code that was used while)205 W
+10 SS 
+5544 68542 MT
+(locks over local locks under)
+88 W( conditions of no contention.)89 W
+8 SS 
+31500 69228 MT
+(debugging the system.  Because of these overheads, the)
+35 W( benchmark results)34 W
+10 SS 
+5544 69739 MT
+(Each benchmark consists of)
+360 W( 10 transactions, each of)359 W
+8 SS 
+31500 70152 MT
+(are not meaningful in any absolute)
+110 W( sense.  Instead, they provide relative)111 W
+10 SS 
+5544 70936 MT
+(which obtains)
+9 W( a particular number of locks.  The names of)10 W
+8 SS 
+31500 71076 MT
+(performance figures by which to analyze the design of the)
+34 W( distributed lock)33 W
+31500 72000 MT
+(manager.)SH
+10 SS 
+30100 75600 MT
+(26)SH
+ES
+%%Page: 27 6
+BS
+0 SI
+9 /Times-Bold AF
+11684 7817 MT
+(Table 4-1:)SH
+/Times-Roman SF
+16059 XM
+(Write locks, 1 server)SH
+10 SS 
+31500 7886 MT
+(locks.)SH
+9 /Times-Bold AF
+37740 9517 MT
+(Table 4-2:)SH
+/Times-Roman SF
+42115 XM
+(Read locks, 1 server)SH
+16259 9684 MT
+(% local)SH
+15540 50 9852 10280 LH BX1
+10251 11296 MT
+(# locks)SH
+13624 XM
+(0)SH
+16222 XM
+(80)SH
+18820 XM
+(100)SH
+20968 XM
+(lock policy)SH
+42215 11384 MT
+(% local)SH
+15540 50 9852 11892 LH BX1
+15540 50 35808 11980 LH BX1
+13624 12908 MT
+(543)SH
+16222 XM
+(326)SH
+18820 XM
+(122)SH
+20968 XM
+(never)SH
+36207 12996 MT
+(# locks)SH
+39580 XM
+(0)SH
+42178 XM
+(80)SH
+44776 XM
+(100)SH
+46924 XM
+(lock policy)SH
+15540 50 35808 13592 LH BX1
+10251 13922 MT
+(50)SH
+13624 XM
+(424)SH
+16222 XM
+(302)SH
+18820 XM
+(122)SH
+20968 XM
+(first)SH
+15540 50 9852 14518 LH BX1
+39580 14608 MT
+(333)SH
+42178 XM
+(132)SH
+44776 XM
+(80)SH
+46924 XM
+(never)SH
+13624 15534 MT
+(884)SH
+16222 XM
+(443)SH
+18820 XM
+(187)SH
+20968 XM
+(never)SH
+36207 15622 MT
+(50)SH
+39580 XM
+(209)SH
+42178 XM
+(105)SH
+44776 XM
+(78)SH
+46924 XM
+(first)SH
+15540 50 35808 16218 LH BX1
+10251 16548 MT
+(100)SH
+13624 XM
+(635)SH
+16222 XM
+(395)SH
+18820 XM
+(185)SH
+20968 XM
+(first)SH
+15540 50 9852 17144 LH BX1
+39580 17234 MT
+(649)SH
+42178 XM
+(250)SH
+44776 XM
+(146)SH
+46924 XM
+(never)SH
+13624 18160 MT
+(3523)SH
+16222 XM
+(1406)SH
+18820 XM
+(712)SH
+20968 XM
+(never)SH
+36207 18248 MT
+(100)SH
+39580 XM
+(400)SH
+42178 XM
+(196)SH
+44776 XM
+(144)SH
+46924 XM
+(first)SH
+15540 50 35808 18844 LH BX1
+10251 19174 MT
+(500)SH
+13624 XM
+(2399)SH
+16222 XM
+(1178)SH
+18820 XM
+(716)SH
+20968 XM
+(first)SH
+15540 11102 50 9852 19770 BX BX1
+-9490 50 13225 19770 LV BX1
+-9490 50 15823 19770 LV BX1
+-9490 50 18421 19770 LV BX1
+-9490 50 20569 19770 LV BX1
+39580 19860 MT
+(3125)SH
+42178 XM
+(1165)SH
+44776 XM
+(676)SH
+46924 XM
+(never)SH
+36207 20874 MT
+(500)SH
+39580 XM
+(1940)SH
+42178 XM
+(928)SH
+44776 XM
+(660)SH
+46924 XM
+(first)SH
+15540 11102 50 35808 21470 BX BX1
+-9490 50 39181 21470 LV BX1
+-9490 50 41779 21470 LV BX1
+-9490 50 44377 21470 LV BX1
+-9490 50 46525 21470 LV BX1
+10 /Symbol AF
+5834 21584 MT
+(\267)SH
+/Times-Italic SF
+6544 XM
+(t)SH
+/Times-Roman SF
+7850 XM
+(is the overhead of every transaction that obtains)245 W
+8 /Times-Italic AF
+6822 21926 MT
+(w)SH
+10 /Times-Roman AF
+6544 22777 MT
+(write locks, computed as)
+430 W( 52 ms.  This includes)429 W
+32500 23170 MT
+(A similar equation models)
+148 W( these results within 3% of)147 W
+6544 23882 MT
+(creating the transaction, logging)
+364 W( changes to stable)365 W
+31500 24367 MT
+(the measured values:)SH
+6544 24987 MT
+(storage, and participating in the two-phase)
+309 W( commit)308 W
+7 SS 
+38296 25617 MT
+(.)SH
+42112 XM
+(.)SH
+44437 XM
+(.)SH
+47267 XM
+(_)SH
+49542 XM
+(.)SH
+9 /Times-Italic AF
+32400 25944 MT
+(T)SH
+/Times-Roman SF
+33397 XM
+(=)SH
+/Times-Italic SF
+34130 XM
+(t)SH
+/Times-Roman SF
+35227 XM
+(+)SH
+/Times-Bold SF
+35960 XM
+(local)SH
+/Times-Italic SF
+38696 XM
+(l)SH
+/Times-Roman SF
+39443 XM
+(+)SH
+/Times-Bold SF
+40176 XM
+(dist)SH
+/Times-Roman SF
+42512 XM
+([)SH
+/Times-Bold SF
+(hits)SH
+/Times-Italic SF
+44837 XM
+(h)SH
+/Times-Roman SF
+45784 XM
+(+ \0501)SH
+/Times-Bold SF
+47617 XM
+(hits)SH
+/Times-Roman SF
+(\051)SH
+/Times-Italic SF
+49942 XM
+(m)SH
+/Times-Roman SF
+50864 XM
+(])SH
+52956 XM
+([4-2])SH
+10 SS 
+6544 26092 MT
+(protocol.)SH
+7 /Times-Bold AF
+37760 26267 MT
+(r)SH
+41576 XM
+(r)SH
+/Times-Italic SF
+32900 26269 MT
+(r)SH
+34380 XM
+(ro)SH
+38946 XM
+(r)SH
+45287 XM
+(r)SH
+50592 XM
+(r)SH
+10 /Times-Roman AF
+31500 27400 MT
+(where:)SH
+/Symbol SF
+5834 27529 MT
+(\267)SH
+/Times-Italic SF
+6544 XM
+(t)SH
+/Times-Roman SF
+8069 XM
+(is an additional overhead incurred by a transaction)63 W
+8 /Times-Italic AF
+6822 27871 MT
+(dw)SH
+10 /Symbol AF
+31790 28505 MT
+(\267)SH
+/Times-Italic SF
+32500 XM
+(T)SH
+/Times-Roman SF
+33770 XM
+(is the total time in ms. per transaction using only)154 W
+6544 28722 MT
+(when it)
+281 W( obtains at least one distributed write lock,)280 W
+8 /Times-Italic AF
+33056 28847 MT
+(r)SH
+10 /Times-Roman AF
+32500 29698 MT
+(read locks.)SH
+6544 29827 MT
+(computed as 152)
+165 W( ms.  The overhead consists of two)166 W
+6544 30932 MT
+(RPCs to the lock manager.  The)
+94 W( first RPC, at prepare)93 W
+/Symbol SF
+31790 31135 MT
+(\267)SH
+/Times-Italic SF
+32500 XM
+(t)SH
+/Times-Roman SF
+33969 XM
+(is the per transaction overhead)
+230 W( when using only)229 W
+8 /Times-Italic AF
+32778 31477 MT
+(ro)SH
+10 /Times-Roman AF
+6544 32037 MT
+(time, creates)
+17 W( a transaction at the lock manager to insert)18 W
+32500 32328 MT
+(read locks.  The value is approximately 14 ms.)SH
+6544 33142 MT
+(a list of locks into a recoverable hash table.)
+280 W( The)809 W
+/Symbol SF
+31790 33765 MT
+(\267)SH
+/Times-Bold SF
+32500 XM
+(local)SH
+/Times-Roman SF
+35113 XM
+(is the number of local read locks obtained)
+8 W( by the)9 W
+8 /Times-Bold AF
+34500 34106 MT
+(r)SH
+10 /Times-Roman AF
+6544 34247 MT
+(second RPC,)
+137 W( at commit time, creates a transaction at)138 W
+32500 34960 MT
+(transaction.)SH
+6544 35352 MT
+(the lock manager to delete the list of locks)
+155 W( from the)154 W
+/Symbol SF
+31790 36397 MT
+(\267)SH
+/Times-Italic SF
+32500 XM
+(l)SH
+/Times-Roman SF
+33366 XM
+(is the time to obtain a local read)
+27 W( lock, 1.33 ms.  This)26 W
+6544 36457 MT
+(recoverable hash table.)SH
+8 /Times-Italic AF
+32778 36739 MT
+(r)SH
+10 /Times-Roman AF
+32500 37590 MT
+(value is smaller than the corresponding)2 W
+/Times-Italic SF
+48454 XM
+(l)SH
+/Times-Roman SF
+49518 XM
+(because read)2 W
+/Symbol SF
+5834 37894 MT
+(\267)SH
+/Times-Bold SF
+6544 XM
+(local)SH
+/Times-Roman SF
+9482 XM
+(is the)
+110 W( number of local write locks obtained by)111 W
+8 /Times-Italic AF
+48732 37932 MT
+(w)SH
+/Times-Bold SF
+8544 38235 MT
+(w)SH
+10 /Times-Roman AF
+32500 38783 MT
+(locks are not recorded in stable storage at prepare time.)SH
+6544 39089 MT
+(the transaction.)SH
+/Symbol SF
+31790 40220 MT
+(\267)SH
+/Times-Bold SF
+32500 XM
+(dist)SH
+/Times-Roman SF
+34776 XM
+(is the)
+115 W( number of distributed read locks obtained)114 W
+/Symbol SF
+5834 40526 MT
+(\267)SH
+/Times-Italic SF
+6544 XM
+(l)SH
+/Times-Roman SF
+7668 XM
+(is the cost of a single local write lock,)
+62 W( computed as)61 W
+8 /Times-Bold AF
+34056 40561 MT
+(r)SH
+/Times-Italic SF
+6822 40868 MT
+(w)SH
+10 /Times-Roman AF
+32500 41415 MT
+(by the transaction.)SH
+6544 41719 MT
+(1.38 ms.  This time includes)
+267 W( the cost of low-level)268 W
+6544 42824 MT
+(synchronization as well as the time needed)
+34 W( to maintain)33 W
+/Symbol SF
+31790 42852 MT
+(\267)SH
+/Times-Italic SF
+32500 XM
+(h)SH
+/Times-Roman SF
+33757 XM
+(is the cost of obtaining a cached distributed)
+196 W( read)197 W
+8 /Times-Italic AF
+33000 43194 MT
+(r)SH
+10 /Times-Roman AF
+6544 43929 MT
+(a hash table.)SH
+32500 44045 MT
+(lock, 1.50 ms.)34 W
+/Times-Italic SF
+38775 XM
+(h)SH
+/Times-Roman SF
+39870 XM
+(is less than)33 W
+/Times-Italic SF
+44608 XM
+(h)SH
+/Times-Roman SF
+45925 XM
+(because no additional)33 W
+8 /Times-Italic AF
+39275 44387 MT
+(r)SH
+45108 XM
+(w)SH
+10 /Times-Roman AF
+32500 45238 MT
+(processing is performed by the)
+455 W( lock manager at)456 W
+/Symbol SF
+5834 45366 MT
+(\267)SH
+/Times-Bold SF
+6544 XM
+(dist)SH
+/Times-Roman SF
+8972 XM
+(is the number)
+44 W( of distributed write locks obtained)45 W
+8 /Times-Bold AF
+8100 45707 MT
+(w)SH
+10 /Times-Roman AF
+32500 46343 MT
+(prepare time for read locks.)9 W
+/Times-Italic SF
+44078 XM
+(h)SH
+/Times-Roman SF
+45148 XM
+(is larger)
+9 W( than)8 W
+/Times-Italic SF
+50644 XM
+(l)SH
+/Times-Roman SF
+51491 XM
+(because)SH
+6544 46561 MT
+(by the transaction.)SH
+8 /Times-Italic AF
+44578 46685 MT
+(r)SH
+50922 XM
+(r)SH
+10 /Times-Roman AF
+32500 47536 MT
+(of additional bookkeeping)
+424 W( performed by the lock)425 W
+/Symbol SF
+5834 47998 MT
+(\267)SH
+/Times-Bold SF
+6544 XM
+(hits)SH
+/Times-Roman SF
+8350 XM
+(is the cache hit ratio \0500.5\051.)SH
+32500 48641 MT
+(library.)SH
+/Symbol SF
+5834 49435 MT
+(\267)SH
+/Times-Italic SF
+6544 XM
+(h)SH
+/Times-Roman SF
+7963 XM
+(is the)
+135 W( cost of obtaining a cached distributed write)134 W
+8 /Times-Italic AF
+7044 49777 MT
+(w)SH
+10 /Symbol AF
+31790 50078 MT
+(\267)SH
+/Times-Italic SF
+32500 XM
+(m)SH
+/Times-Roman SF
+33868 XM
+(is the cost of obtaining a distributed)
+85 W( read lock that)84 W
+8 /Times-Italic AF
+33222 50420 MT
+(r)SH
+10 /Times-Roman AF
+6544 50628 MT
+(lock, computed as 2.16 ms.)
+1 W( This)
+254 W( time is 0.78 ms larger)2 W
+32500 51271 MT
+(is not cached, 6.20 ms.  Again, read locks)
+66 W( are cheaper)67 W
+6544 51733 MT
+(than the time needed to)
+296 W( obtain a local write lock.)295 W
+32500 52376 MT
+(than write locks)
+202 W( because no additional processing is)201 W
+6544 52838 MT
+(Approximately 0.1 ms is used by extra bookkeeping)
+30 W( in)31 W
+32500 53481 MT
+(needed at prepare time.)SH
+6544 53943 MT
+(the lock library for)
+142 W( distributed locks.  The remaining)141 W
+6544 55048 MT
+(time is used by)
+533 W( hash table inserts and deletes)534 W
+/Times-Bold SF
+31750 55231 MT
+(Contention)SH
+/Times-Roman SF
+6544 56153 MT
+(performed by the lock manager at prepare and commit)48 W
+32500 56428 MT
+(A lock can be cached in read mode)
+96 W( by several servers)97 W
+6544 57258 MT
+(time, respectively.)SH
+31500 57625 MT
+(simultaneously. Thus,)
+848 W( no degradation)
+299 W( in performance)298 W
+/Symbol SF
+5834 58695 MT
+(\267)SH
+/Times-Italic SF
+6544 XM
+(m)SH
+/Times-Roman SF
+8079 XM
+(is the cost of obtaining a distributed write lock that)29 W
+31500 58822 MT
+(should be expected if the)
+92 W( read-mode benchmarks are run)93 W
+8 /Times-Italic AF
+7266 59037 MT
+(w)SH
+10 /Times-Roman AF
+6544 59888 MT
+(is not)
+48 W( cached, computed as 6.61 ms.  This time is 4.45)47 W
+31500 60019 MT
+(by two servers, each with its own)
+11 W( CPU.  If the two servers)10 W
+6544 60993 MT
+(ms larger than the)
+261 W( time needed to obtain a cached)262 W
+31500 61216 MT
+(are time-sliced on a single CPU,)
+234 W( the benchmark times)235 W
+6544 62098 MT
+(distributed write lock.)
+158 W( The)
+565 W( cost of two RPCs to the)157 W
+31500 62413 MT
+(should double.  Table 4-3 reports the benchmark times for)14 W
+6544 63203 MT
+(lock manager \050one RPC to obtain the lock, one RPC to)24 W
+31500 63610 MT
+(two servers running)
+307 W( with simulated concurrency on a)308 W
+6544 64308 MT
+(release the lock\051 is)
+524 W( approximately 3 ms.  The)523 W
+31500 64807 MT
+(single processor)
+693 W( system.  Because of scheduling)692 W
+6544 65413 MT
+(remaining time \0501.5 ms\051 is)
+129 W( used to obtain the lock at)130 W
+31500 66004 MT
+(irregularities which result in some serial)
+78 W( \050rather than true)79 W
+6544 66518 MT
+(the lock manager.  \050Obtaining)
+259 W( the lock at the lock)258 W
+31500 67201 MT
+(concurrent\051 execution,)
+184 W( the benchmark times are slightly)183 W
+6544 67623 MT
+(manager is slightly more expensive than the)
+141 W( 1.38 ms)142 W
+31500 68398 MT
+(less than twice the times reported in Table 4-2.)SH
+6544 68728 MT
+(needed to obtain a local lock because of)
+52 W( the additional)51 W
+6544 69833 MT
+(bookkeeping needed to keep track of multiple servers.\051)SH
+32500 69894 MT
+(Obtaining meaningful numbers for write-sharing)
+397 W( is)398 W
+31500 71091 MT
+(problematic. When)
+776 W( there is high contention for write)262 W
+6544 71329 MT
+(Table 4-2 contains the benchmark)
+363 W( results for read)364 W
+30100 75600 MT
+(27)SH
+ES
+%%Page: 28 7
+BS
+0 SI
+9 /Times-Bold AF
+11609 7817 MT
+(Table 4-3:)SH
+/Times-Roman SF
+15984 XM
+(Read locks, 2 servers)SH
+10 SS 
+31500 7886 MT
+(in a server, it is not an error)
+55 W( for the transaction to request)54 W
+31500 9083 MT
+(the lock again, and the lock manager)
+115 W( will grant the lock)116 W
+9 SS 
+16259 9684 MT
+(% local)SH
+15990 50 9627 10280 LH BX1
+10 SS 
+31500 10280 MT
+(request immediately.)SH
+9 SS 
+10026 11296 MT
+(# locks)SH
+13399 XM
+(0)SH
+15997 XM
+(80)SH
+18595 XM
+(100)SH
+21193 XM
+(lock policy)SH
+10 SS 
+32500 11776 MT
+(The call-back presents some interesting race)931 W
+15990 50 9627 11892 LH BX1
+9 SS 
+13399 12908 MT
+(667)SH
+15997 XM
+(262)SH
+18595 XM
+(166)SH
+21193 XM
+(never)SH
+10 SS 
+31500 12973 MT
+(conditions, since the lock manager may attempt)
+470 W( to)471 W
+9 SS 
+10026 13922 MT
+(50)SH
+13399 XM
+(417)SH
+15997 XM
+(209)SH
+18595 XM
+(161)SH
+21193 XM
+(first)SH
+10 SS 
+31500 14170 MT
+(retrieve a lock cached by a server)
+339 W( before the server)338 W
+15990 50 9627 14518 LH BX1
+31500 15367 MT
+(realizes it has obtained a cached lock, or after the)
+99 W( server)100 W
+9 SS 
+13399 15534 MT
+(1259)SH
+15997 XM
+(451)SH
+18595 XM
+(274)SH
+21193 XM
+(never)SH
+10026 16548 MT
+(100)SH
+13399 XM
+(793)SH
+15997 XM
+(383)SH
+18595 XM
+(191)SH
+21193 XM
+(first)SH
+10 SS 
+31500 16564 MT
+(has started to release a)
+67 W( cached lock.  In the first case, the)66 W
+15990 50 9627 17144 LH BX1
+31500 17761 MT
+(race is avoided by setting a flag when the server tries to)105 W
+9 SS 
+13399 18160 MT
+(6344)SH
+15997 XM
+(2272)SH
+18595 XM
+(1325)SH
+21193 XM
+(never)SH
+10 SS 
+31500 18958 MT
+(cache the lock.  When the server)
+163 W( receives the call-back)162 W
+9 SS 
+10026 19174 MT
+(500)SH
+13399 XM
+(3800)SH
+15997 XM
+(1735)SH
+18595 XM
+(1307)SH
+21193 XM
+(first)SH
+15990 11102 50 9627 19770 BX BX1
+-9490 50 13000 19770 LV BX1
+-9490 50 15598 19770 LV BX1
+-9490 50 18196 19770 LV BX1
+-9490 50 20794 19770 LV BX1
+10 SS 
+31500 20155 MT
+(from the lock manager, it)
+84 W( notices that the flag is set, and)85 W
+31500 21352 MT
+(delays processing of the call-back)
+65 W( until the cache attempt)64 W
+5544 21470 MT
+(locks, benchmark times are highly variable due)
+26 W( to process)27 W
+31500 22549 MT
+(is completed.  In the)
+66 W( second case, the server immediately)67 W
+5544 22667 MT
+(scheduling irregularities.  Also, deadlocks)
+262 W( are possible)261 W
+31500 23746 MT
+(returns to the)
+30 W( lock manager a notification that it no longer)29 W
+5544 23864 MT
+(when locks)
+183 W( are chosen randomly.  For these reasons, a)184 W
+31500 24943 MT
+(has the lock cached, and the lock manager updates its data)10 W
+5544 25061 MT
+(different benchmark was chosen to measure the)
+176 W( cost of)175 W
+31500 26140 MT
+(structures as appropriate.)SH
+5544 26258 MT
+(obtaining a write lock cached by another server.)SH
+32500 27636 MT
+(Another protocol)
+132 W( modification became necessary after)131 W
+6544 27754 MT
+(The size of the lock space and each server's cache size)52 W
+31500 28833 MT
+(some tests exhibited problems with)
+319 W( ``orphans.''  The)320 W
+5544 28951 MT
+(are set to 1024 locks.)
+151 W( Initially,)
+550 W( no locks are cached by)150 W
+31500 30030 MT
+(original protocol allowed call-backs)
+27 W( for cached locks.  No)26 W
+5544 30148 MT
+(any server.)
+76 W( The)
+403 W( first server then obtains \050and caches\051 all)77 W
+31500 31227 MT
+(call-backs were included in the case)
+120 W( where a transaction)121 W
+5544 31345 MT
+(of the locks, in groups)
+320 W( of 128 locks per transaction.)319 W
+31500 32424 MT
+(held a lock that was not cached by the)
+11 W( server.  Instead, the)10 W
+5544 32542 MT
+(When the first server has completed, the second)
+193 W( server)194 W
+31500 33621 MT
+(lock manager awaited a message from the server that)
+79 W( the)80 W
+5544 33739 MT
+(then obtains and caches all)
+302 W( of the locks in a similar)301 W
+31500 34818 MT
+(transaction had finished using the lock.)
+16 W( If)
+280 W( a second server)15 W
+5544 34936 MT
+(manner; however, the lock manager must contact the)
+47 W( first)48 W
+31500 36015 MT
+(requested the)
+186 W( lock, the request would be queued in the)187 W
+5544 36133 MT
+(server to uncache each lock in turn.)SH
+31500 37212 MT
+(lock manager.)
+246 W( Unfortunately,)
+740 W( if the first server failed)245 W
+6544 37629 MT
+(The median time per transaction executed by the)
+134 W( first)133 W
+31500 38409 MT
+(before releasing the lock,)
+234 W( the lock manager would not)235 W
+5544 38826 MT
+(server is 997 ms., as is)
+127 W( predicted by Equation 4-1.  The)128 W
+31500 39606 MT
+(receive any notification,)
+257 W( and the queued request could)256 W
+5544 40023 MT
+(median time)
+3 W( per transaction executed by the second server)2 W
+31500 40803 MT
+(wait forever.  To correct this situation, the)
+128 W( protocol was)129 W
+5544 41220 MT
+(is 1259 ms.)
+37 W( Assuming)
+326 W( a per transaction overhead of)38 W
+/Times-Italic SF
+27169 XM
+(t)SH
+28269 XM
+(+)SH
+8 SS 
+27447 41562 MT
+(w)SH
+10 /Times-Roman AF
+31500 42000 MT
+(modified so that the lock)
+183 W( manager forwards the second)182 W
+/Times-Italic SF
+5544 42417 MT
+(t)SH
+/Times-Roman SF
+7024 XM
+(= 204 ms., the time per lock in)
+18 W( this case is 8.2 ms.  By)17 W
+8 /Times-Italic AF
+5822 42759 MT
+(dw)SH
+10 /Times-Roman AF
+31500 43197 MT
+(server's request to the first server)
+92 W( to be queued there.  If)93 W
+5544 43614 MT
+(subtracting)SH
+/Times-Italic SF
+10244 XM
+(m)SH
+/Times-Roman SF
+11500 XM
+(, we find that an additional 2.0)
+6 W( ms. per lock)7 W
+8 /Times-Italic AF
+10966 43956 MT
+(w)SH
+10 /Times-Roman AF
+31500 44394 MT
+(the first server fails, Mach notifies the lock manager)311 W
+5544 44811 MT
+(is needed for the lock manager to obtain the cached lock)85 W
+31500 45591 MT
+(\050because of the outstanding RPC\051, and the)
+174 W( lock will be)175 W
+5544 46008 MT
+(from the first server.  This)
+31 W( value is slightly lower than the)32 W
+31500 46788 MT
+(granted to the second server.)SH
+5544 47205 MT
+(expected cost of the RPC)
+313 W( \0501.5 ms.\051 plus the cost of)312 W
+32500 48284 MT
+(An optimization to the protocol)
+30 W( that we considered was)29 W
+5544 48402 MT
+(obtaining the lock at the first server \0501 ms.\051.)SH
+31500 49481 MT
+(to forward locks directly from server to server,)
+54 W( bypassing)55 W
+/Times-Bold SF
+14493 50152 MT
+(5. Discussion)SH
+/Times-Roman SF
+31500 50678 MT
+(the lock manager process.  However,)
+322 W( such a scheme)321 W
+31500 51875 MT
+(would require the)
+43 W( requesting server to know which server)44 W
+/Times-Bold SF
+5794 51902 MT
+(Implementation lessons)SH
+/Times-Roman SF
+31500 53072 MT
+(is caching a given lock.  In)
+25 W( the general case, only the lock)24 W
+6544 53099 MT
+(Approximately 1200 lines of C were added to)
+328 W( the)329 W
+31500 54269 MT
+(manager has this information, and thus no messages)367 W
+5544 54296 MT
+(Camelot library to support)
+207 W( distributed locks.  The lock)206 W
+31500 55466 MT
+(would be saved.  \050It)
+2 W( may be possible to treat knowledge of)1 W
+5544 55493 MT
+(manager process is)
+67 W( approximately 2100 lines of C. Much)68 W
+31500 56663 MT
+(which server caches)
+162 W( the lock as a hint.\051  However, this)163 W
+5544 56690 MT
+(of the code in the lock manager is adapted from)
+285 W( the)284 W
+31500 57860 MT
+(optimization applies to a case \050write)
+280 W( sharing\051 that we)279 W
+5544 57887 MT
+(existing Camelot library)
+84 W( code.  Thus, writing the code to)85 W
+31500 59057 MT
+(expect to be uncommon, and we did not pursue it.)SH
+5544 59084 MT
+(maintain the lock data structures was an)
+102 W( easy part of the)101 W
+5544 60281 MT
+(work.)SH
+32500 60553 MT
+(The implementation)
+344 W( presently has a restriction that)345 W
+31500 61750 MT
+(limits its utility for certain types of distributed)
+5 W( transaction.)4 W
+6544 61777 MT
+(Designing the protocol for)
+93 W( transferring a lock between)94 W
+31500 62947 MT
+(As mentioned, communication is via Mach RPCs instead)81 W
+5544 62974 MT
+(the lock manager and a server)
+155 W( was more difficult.  The)154 W
+31500 64144 MT
+(of Camelot SERVER_CALLs.  When a server calls the)158 W
+5544 64171 MT
+(lock manager and servers)
+22 W( are multi-threaded for increased)23 W
+31500 65341 MT
+(lock manager)
+47 W( on another node using a Mach RPC instead)48 W
+5544 65368 MT
+(concurrency, and several race)
+309 W( conditions are possible.)308 W
+31500 66538 MT
+(of a SERVER_CALL, the calling transaction's history)266 W
+5544 66565 MT
+(Most race conditions can be avoided)
+103 W( by judicious use of)104 W
+31500 67735 MT
+(does not propagate to the Camelot Transaction)
+133 W( Manager)134 W
+5544 67762 MT
+(low-level semaphores.  Thus, for instance,)
+431 W( the lock)430 W
+31500 68932 MT
+(on the lock)
+336 W( manager's node.  Occasionally, the lock)335 W
+5544 68959 MT
+(manager correctly)
+53 W( handles multiple requests from a given)54 W
+31500 70129 MT
+(manager must ask the)
+212 W( Transaction Manager to mediate)213 W
+5544 70156 MT
+(transaction in a given server for a)
+166 W( given lock.  That is,)165 W
+31500 71326 MT
+(lock conflicts between subtransactions in the same family.)10 W
+5544 71353 MT
+(once the lock manager)
+51 W( has granted a lock to a transaction)52 W
+30100 75600 MT
+(28)SH
+ES
+%%Page: 29 8
+BS
+0 SI
+10 /Times-Roman AF
+5544 7886 MT
+(Without the)
+913 W( propagated transaction history, the)914 W
+31500 XM
+(committing a transaction, a site must reliably broadcast its)12 W
+5544 9083 MT
+(Transaction Manager is)
+499 W( unable to answer the lock)498 W
+31500 XM
+(updates to a set of backup sites.  Hsu and Tam's work)168 W
+8 SS 
+13393 9935 MT
+(3)SH
+10 SS 
+5544 10280 MT
+(manager's queries.)296 W
+14885 XM
+(Thus, in the)
+296 W( case of distributed,)295 W
+31500 XM
+(differs from ours)
+279 W( in relying on reliable broadcast and)280 W
+5544 11477 MT
+(nested transactions, the present)
+312 W( implementation of the)313 W
+31500 XM
+(using hardware assistance for asynchronous locking.)SH
+5544 12674 MT
+(distributed lock manager will fail.)
+33 W( The)
+314 W( lock manager will)32 W
+32500 12973 MT
+(The VAX/VMS)
+37 W( distributed lock manager)
+36 W( [27])
+SH( provides)36 W
+5544 13871 MT
+(function correctly for)
+678 W( transactions that are either)679 W
+31500 14170 MT
+(a shared lock name space)
+97 W( for a cluster of minicomputers)98 W
+5544 15068 MT
+(distributed or nested, however.  Correcting this)
+141 W( problem)140 W
+31500 15367 MT
+(that share a file system.)
+428 W( The)
+1105 W( VMS lock manager)427 W
+5544 16265 MT
+(will require adding several interfaces)
+347 W( to the Camelot)348 W
+31500 16564 MT
+(partitions the lock space via a directory scheme, and relies)8 W
+5544 17462 MT
+(Transaction Manager to obtain the)
+142 W( necessary transaction)141 W
+31500 17761 MT
+(on a connection manager)
+65 W( to provide notification of nodes)64 W
+5544 18659 MT
+(history.)SH
+31500 18958 MT
+(entering or leaving the configuration.  The VMS)
+40 W( manager)41 W
+31500 20155 MT
+(includes an asynchronous notification mechanism that)
+132 W( is)131 W
+/Times-Bold SF
+5794 20409 MT
+(Related work)SH
+/Times-Roman SF
+31500 21352 MT
+(similar to the call-back described in this)
+26 W( paper, although a)27 W
+6544 21606 MT
+(Li's implementation of distributed)
+196 W( shared memory in)197 W
+31500 22549 MT
+(VMS server must explicitly intervene when the)743 W
+5544 22803 MT
+(the Ivy)
+564 W( system)
+563 W( [7])
+SH( guarantees coherence of shared)563 W
+31500 23746 MT
+(asynchronous notification is received.)SH
+5544 24000 MT
+(memory using a variant of the Berkeley cache consistency)9 W
+5544 25197 MT
+(protocol, and uses)
+100 W( test-and-set instructions on distributed)99 W
+/Times-Bold SF
+31750 25496 MT
+(Conclusions and directions for future study)SH
+/Times-Roman SF
+5544 26394 MT
+(shared memory for synchronization.)
+942 W( A)
+2135 W( later)943 W
+32500 26693 MT
+(The benchmarks in)
+494 W( Section 4 show the cost of)495 W
+5544 27591 MT
+(implementation on a hypercube)
+792 W( system)
+791 W( [23])
+SH( also)791 W
+31500 27890 MT
+(obtaining a cached distributed read lock,)94 W
+/Times-Italic SF
+48532 XM
+(h)SH
+/Times-Roman SF
+49343 XM
+(, to be within)93 W
+8 /Times-Italic AF
+49032 28232 MT
+(r)SH
+10 /Times-Roman AF
+5544 28788 MT
+(guarantees coherence,)
+525 W( but uses message passing to)526 W
+31500 29087 MT
+(12% of)
+81 W( the cost of obtaining a local read lock,)82 W
+/Times-Italic SF
+51010 XM
+(l)SH
+/Times-Roman SF
+51599 XM
+(. In)
+414 W( the)82 W
+8 /Times-Italic AF
+51288 29429 MT
+(r)SH
+10 /Times-Roman AF
+5544 29985 MT
+(provide semaphores for synchronization.)
+378 W( Unlike)
+1004 W( our)377 W
+31500 30284 MT
+(present implementation, the)
+225 W( cost of obtaining a cached)224 W
+5544 31182 MT
+(work, which uses static ownership, Li's)
+77 W( algorithms allow)78 W
+31500 31481 MT
+(distributed write lock,)86 W
+/Times-Italic SF
+40814 XM
+(h)SH
+/Times-Roman SF
+41848 XM
+(, is 57% higher than the cost of)87 W
+8 /Times-Italic AF
+41314 31823 MT
+(w)SH
+10 /Times-Roman AF
+5544 32379 MT
+(ownership of data to change dynamically.)SH
+31500 32678 MT
+(obtaining a local write lock,)365 W
+/Times-Italic SF
+44768 XM
+(l)SH
+/Times-Roman SF
+45580 XM
+(. Almost)
+978 W( all of the)364 W
+8 /Times-Italic AF
+45046 33020 MT
+(w)SH
+10 /Times-Roman AF
+6544 33875 MT
+(Mach [8])
+SH( and Mirage)
+587 W( [24])
+SH( both)
+587 W( provide coherent)586 W
+31500 XM
+(difference is caused)
+293 W( by hash table inserts and deletes)294 W
+5544 35072 MT
+(distributed shared memory.  Strong)
+664 W( coherency is)665 W
+31500 XM
+(performed by the lock manager)
+204 W( at prepare and commit)203 W
+5544 36269 MT
+(maintained by invalidating all)
+301 W( other copies of a page)300 W
+31500 XM
+(time. The)
+468 W( record inserted by these operations is used to)110 W
+5544 37466 MT
+(before writing.  Both)
+178 W( systems allow applications to use)179 W
+31500 XM
+(prevent the lock manager from)
+62 W( assigning locks belonging)61 W
+5544 38663 MT
+(spin locks for synchronization, but the authors suggest)232 W
+31500 XM
+(to prepared transactions.  The)
+491 W( cost can be almost)492 W
+5544 39860 MT
+(that alternative synchronization methods be)
+266 W( used \050e.g.,)267 W
+31500 XM
+(eliminated if the record is created per)
+124 W( transaction, rather)123 W
+5544 41057 MT
+(Mach messages\051.  Mirage includes an adjustable delay)
+75 W( to)74 W
+31500 XM
+(than per lock.  We)
+334 W( expect this to bring the cost of)335 W
+5544 42254 MT
+(reduce thrashing when)
+220 W( several nodes contend for write)221 W
+31500 XM
+(obtaining a cached distributed)
+104 W( write lock to with 10% to)103 W
+5544 43451 MT
+(access to a given page.)SH
+31500 XM
+(15% of the cost of obtaining a local write lock.)SH
+6544 44947 MT
+(The V system)
+26 W( [10])
+SH( provides coherent)
+26 W( distributed shared)25 W
+32500 XM
+(The benchmarks also indicate that no additional)
+244 W( per)245 W
+5544 46144 MT
+(memory by allowing files to be)
+590 W( memory-mapped.)591 W
+31500 XM
+(transaction overhead is imposed by distributed read)
+26 W( locks.)25 W
+5544 47341 MT
+(Synchronization is provided by)
+544 W( file locking RPCs.)543 W
+31500 XM
+(However, the)
+738 W( per transaction overhead of using)739 W
+5544 48538 MT
+(Gray [25])
+SH( has proposed a timer-based)
+146 W( mechanism called)147 W
+31500 XM
+(distributed write locks,)57 W
+/Times-Italic SF
+41115 XM
+(t)SH
+/Times-Roman SF
+42233 XM
+(+)SH
+/Times-Italic SF
+43103 XM
+(t)SH
+/Times-Roman SF
+44315 XM
+(, is approximately 4 times)56 W
+8 /Times-Italic AF
+41393 48880 MT
+(w)SH
+43381 XM
+(dw)SH
+10 SS 
+5544 49735 MT
+(leases)SH
+/Times-Roman SF
+8305 XM
+(for maintaining coherency of cached files)
+67 W( in the V)66 W
+31500 XM
+(the per)
+258 W( transaction overhead of using only local write)259 W
+5544 50932 MT
+(system.)SH
+31500 XM
+(locks,)SH
+/Times-Italic SF
+34163 XM
+(t)SH
+/Times-Roman SF
+34975 XM
+(. The)
+354 W( extra overhead is primarily due to the cost)51 W
+8 /Times-Italic AF
+34441 51274 MT
+(w)SH
+10 /Times-Roman AF
+31500 52129 MT
+(of recording the list)
+212 W( of write locks held by a prepared)213 W
+6544 52428 MT
+(Clouds [21])
+SH( merges locking and data transfer to)
+2 W( provide)3 W
+31500 53326 MT
+(transaction in stable storage, and then erasing the list)283 W
+5544 53625 MT
+(coherent distributed)
+415 W( shared memory and semaphores.)414 W
+31500 54523 MT
+(when the transaction commits.)
+41 W( In)
+333 W( fact, this list duplicates)42 W
+5544 54822 MT
+(Readers discard a page after it is unlocked, eliminating)179 W
+31500 55720 MT
+(a list recorded)
+108 W( by Camelot on the node where the server)107 W
+5544 56019 MT
+(the need for)
+100 W( broadcast invalidation when a writer wishes)99 W
+31500 56917 MT
+(holding the locks resides.  The per transaction overhead)4 W
+/Times-Italic SF
+54088 XM
+(t)SH
+/Times-Roman SF
+5544 57216 MT
+(write access to a page.)SH
+8 /Times-Italic AF
+54366 57259 MT
+(w)SH
+10 /Times-Roman AF
+31500 58114 MT
+(+)SH
+/Times-Italic SF
+32316 XM
+(t)SH
+/Times-Roman SF
+33779 XM
+(can be reduced to approximately twice)1 W
+/Times-Italic SF
+49503 XM
+(t)SH
+/Times-Roman SF
+50566 XM
+(as follows.)1 W
+8 /Times-Italic AF
+32594 58456 MT
+(dw)SH
+49781 XM
+(w)SH
+10 /Times-Roman AF
+6544 58712 MT
+(The systems described above focus on distributed)419 W
+31500 59311 MT
+(Make the lock manager join the)
+425 W( transaction that is)426 W
+5544 59909 MT
+(shared memory, but)
+688 W( do not support transactions.)687 W
+31500 60508 MT
+(preparing to commit so that)
+284 W( the two-phase distributed)283 W
+5544 61106 MT
+(However, Hsu and Tam)
+109 W( [26])
+SH( propose an)
+109 W( algorithm using)110 W
+31500 61705 MT
+(commit protocol will be used by Camelot.  Change)373 W
+5544 62303 MT
+(reliable broadcast to provide)
+420 W( transactional distributed)419 W
+31500 62902 MT
+(Camelot to record the list of distributed write)
+46 W( locks in the)45 W
+5544 63500 MT
+(shared memory.)
+33 W( Coherency)
+317 W( is maintained by invalidating)34 W
+31500 64099 MT
+(log on the lock manager's node instead of)
+196 W( the server's)197 W
+5544 64697 MT
+(all other copies of a)
+16 W( page before writing.  Serializability is)15 W
+31500 65296 MT
+(node. Change)
+792 W( the lock manager to record the list)
+271 W( in)270 W
+5544 65894 MT
+(provided by two-phase locking.)
+113 W( Permanence)
+477 W( and failure)114 W
+31500 66493 MT
+(volatile storage, and recover the list)
+32 W( from the Camelot log)33 W
+5544 67091 MT
+(atomicity are provided by using a)
+104 W( replicated log:  before)103 W
+31500 67690 MT
+(if the lock manager crashes.)SH
+32500 69186 MT
+(In distributed operation, the cost of)
+415 W( cache misses)414 W
+10800 50 5544 69428 UL
+31500 70383 MT
+(should be dominated by communication costs.)
+67 W( One)
+386 W( RPC)68 W
+6 SS 
+5544 70767 MT
+(3)SH
+8 SS 
+5844 71076 MT
+(Unfortunately, since the conflicting transaction may reside on a third)203 W
+10 SS 
+31500 71580 MT
+(is required for a)
+131 W( cache miss if no other server holds the)130 W
+8 SS 
+5544 72000 MT
+(node, even the caller's Transaction Manager may be unable to answer.)SH
+10 SS 
+30100 75600 MT
+(29)SH
+ES
+%%Page: 30 9
+BS
+0 SI
+9 /Times-Roman AF
+33300 7817 MT
+(Coupled Distributed System'',)440 W
+/Times-Italic SF
+45870 XM
+(Frontiers in Computer)440 W
+10 /Times-Roman AF
+5544 7886 MT
+(lock. Two)
+374 W( RPCs are required for a cache miss if)
+62 W( another)63 W
+9 /Times-Italic AF
+33300 8831 MT
+(Communications Technology:)
+70 W( Proc.)
+367 W( ACM SIGCOMM '87)71 W
+10 /Times-Roman AF
+5544 9083 MT
+(server is caching the lock.)
+169 W( Thus,)
+586 W( when communication)168 W
+9 /Times-Italic AF
+33300 9845 MT
+(Workshop)SH
+/Times-Roman SF
+(, 1988, pp. 317-327.)SH
+10 SS 
+5544 10280 MT
+(costs are low and the primary access to shared)
+207 W( data is)208 W
+9 SS 
+31500 10906 MT
+([10])SH
+33300 XM
+(David R. Cheriton, ``The)
+47 W( Unified Management of Memory)46 W
+10 SS 
+5544 11477 MT
+(read-only, the distributed lock manager)
+350 W( design works)349 W
+9 SS 
+33300 11920 MT
+(in the V)
+460 W( Distributed System'', Tech. report STAN-)461 W
+10 SS 
+5544 12674 MT
+(well. Expectations)
+1344 W( are that an adaptation of the)547 W
+9 SS 
+33300 12934 MT
+(CS-88-1192, Stanford University, 1988.)SH
+10 SS 
+5544 13871 MT
+(distributed lock protocol)
+51 W( to handle data sharing will work)50 W
+9 SS 
+31500 13995 MT
+([11])SH
+33300 XM
+(James N. Gray, ``A)
+297 W( Transaction Model'', Tech. report)296 W
+33300 15009 MT
+(RJ2895, IBM Research Laboratory, San Jose, California,)175 W
+10 SS 
+5544 15068 MT
+(well in a similar environment.)SH
+9 SS 
+33300 16023 MT
+(August 1980.)SH
+10 SS 
+6544 16564 MT
+(Two challenging problems remain to be addressed by)141 W
+9 SS 
+31500 17084 MT
+([12])SH
+33300 XM
+(Alfred Z. Spector and Peter M.)
+41 W( Schwarz, ``Transactions: A)40 W
+10 SS 
+5544 17761 MT
+(future work.  To achieve)
+39 W( better performance, concurrency)38 W
+9 SS 
+33300 18098 MT
+(Construct for Reliable Distributed Computing'',)60 W
+/Times-Italic SF
+51200 XM
+(Operating)SH
+10 /Times-Roman AF
+5544 18958 MT
+(control and coherency control)
+664 W( should be unified.)665 W
+9 /Times-Italic AF
+33300 19112 MT
+(Systems Review)365 W
+/Times-Roman SF
+(, Vol.)
+SH( 17,)
+365 W( No.)
+SH( 2,)
+365 W( April 1983,)
+SH( pp. 18-35,)365 W
+33300 20126 MT
+(Also available as Tech. Report CMU-CS-82-143, Carnegie)50 W
+10 SS 
+5544 20155 MT
+(However, we do not know if)
+206 W( data can be piggybacked)205 W
+9 SS 
+33300 21140 MT
+(Mellon University, January 1983.)SH
+10 SS 
+5544 21352 MT
+(successfully on messages of)
+49 W( the distributed lock protocol.)50 W
+9 SS 
+31500 22201 MT
+([13])SH
+33300 XM
+(Alfred Z. Spector,)
+9 W( ``Distributed Transaction Processing and)8 W
+10 SS 
+5544 22549 MT
+(Secondly, transaction processing requires an effective)370 W
+9 SS 
+33300 23215 MT
+(the Camelot System'', in)162 W
+/Times-Italic SF
+43174 XM
+(Distributed Operating Systems:)163 W
+10 /Times-Roman AF
+5544 23746 MT
+(recovery technique.  Typically,)
+85 W( transaction systems use a)86 W
+9 /Times-Italic AF
+33300 24229 MT
+(Theory and Practice,)216 W
+/Times-Roman SF
+41798 XM
+(Yakup Paker et)
+216 W( al., ed., Springer-)215 W
+10 SS 
+5544 24943 MT
+(local log to record changes made by a transaction)
+74 W( so that)73 W
+9 SS 
+33300 25243 MT
+(Verlag, Nato Advanced Study Institute Series)
+114 W( - Computer)115 W
+10 SS 
+5544 26140 MT
+(those changes may be undone)
+189 W( \050on transaction abort\051 or)190 W
+9 SS 
+33300 26257 MT
+(and Systems Sciences,)
+7 W( 1987, pp. 331-353, Also available as)6 W
+33300 27271 MT
+(Carnegie Mellon Report CMU-CS-87-100, January 1987.)SH
+10 SS 
+5544 27337 MT
+(redone \050after a)
+36 W( system crash\051.  However, in a data sharing)35 W
+9 SS 
+31500 28332 MT
+([14])SH
+33300 XM
+(Jeffrey L. Eppinger,)
+93 W( Lily B. Mummert, Alfred Z. Spector,)94 W
+10 SS 
+5544 28534 MT
+(environment, the log data needed to undo or redo a)335 W
+9 /Times-Italic AF
+33300 29346 MT
+(Guide to the Camelot Distributed Transaction Facility)325 W
+10 /Times-Roman AF
+5544 29731 MT
+(transaction may)
+15 W( be scattered in several local logs, some of)14 W
+9 /Times-Italic AF
+33300 30360 MT
+(including the Avalon Language,)95 W
+/Times-Roman SF
+45455 XM
+(Prentice-Hall, Englewood)95 W
+10 SS 
+5544 30928 MT
+(which may be unavailable.  To address)
+162 W( the concerns of)163 W
+9 SS 
+33300 31374 MT
+(Cliffs, New Jersey, 1989.)SH
+10 SS 
+5544 32125 MT
+(efficiency and availability,)
+163 W( the log data may need to be)162 W
+9 SS 
+31500 32435 MT
+([15])SH
+33300 XM
+(J. Eliot B. Moss,)222 W
+/Times-Italic SF
+40413 XM
+(Nested Transactions: An Approach)
+222 W( to)221 W
+10 /Times-Roman AF
+5544 33322 MT
+(replicated in some way.)SH
+9 /Times-Italic AF
+33300 33449 MT
+(Reliable Distributed Computing,)260 W
+/Times-Roman SF
+46080 XM
+(PhD dissertation, MIT,)260 W
+33300 34463 MT
+(April 1981.)SH
+10 /Times-Bold AF
+13483 35072 MT
+(Acknowledgements)SH
+9 /Times-Roman AF
+31500 35524 MT
+([16])SH
+33300 XM
+(Theo Haerder, Andreas Reuter, ``Principles of Transaction-)25 W
+6544 36170 MT
+(My advisor, Alfred Spector, provided most of)
+56 W( my inspiration)57 W
+33300 36538 MT
+(Oriented Database)
+1018 W( Recovery'',)1019 W
+/Times-Italic SF
+47756 XM
+(ACM Computing)1019 W
+/Times-Roman SF
+5544 37268 MT
+(for this work.  My father)
+193 W( provided helpful comments on the)192 W
+/Times-Italic SF
+33300 37552 MT
+(Surveys)SH
+/Times-Roman SF
+(, Vol. 15, No. 4, December 1983, pp. 287-318.)SH
+5544 38366 MT
+(paper and moral support.)SH
+31500 38613 MT
+([17])SH
+33300 XM
+(Dean S. Daniels,)359 W
+/Times-Italic SF
+40651 XM
+(Distributed Logging for Transaction)358 W
+33300 39627 MT
+(Processing,)SH
+/Times-Roman SF
+37830 XM
+(PhD dissertation, Carnegie Mellon University,)80 W
+10 /Times-Bold AF
+14912 40116 MT
+(References)SH
+9 /Times-Roman AF
+33300 40641 MT
+(December 1988, Also available as)
+254 W( Tech. Report CMU-)253 W
+5544 41177 MT
+([1])SH
+7344 XM
+(R. W. Watson, ``Distributed system architecture model'',)150 W
+33300 41655 MT
+(CS-89-114, Carnegie Mellon University, August, 1988.)SH
+7344 42191 MT
+(in)SH
+/Times-Italic SF
+8353 XM
+(Distributed Systems)
+84 W( - Architecture and Implementation:)83 W
+/Times-Roman SF
+31500 42716 MT
+([18])SH
+33300 XM
+(Philip A.)
+145 W( Bernstein, Nathan Goodman, ``A Sophisticate's)146 W
+/Times-Italic SF
+7344 43205 MT
+(An Advanced Course,)353 W
+/Times-Roman SF
+16453 XM
+(B. W. Lampson, ed., Springer-)354 W
+33300 43730 MT
+(Introduction to Distributed)
+888 W( Database Concurrency)887 W
+7344 44219 MT
+(Verlag, Lecture Notes)
+290 W( in Computer Science, Vol. 105,)289 W
+33300 44744 MT
+(Control'',)SH
+/Times-Italic SF
+37321 XM
+(Proc. Eighth Int'l Conf. on Very Large Data)222 W
+/Times-Roman SF
+7344 45233 MT
+(1981, pp. 10-43, ch. 2.)SH
+/Times-Italic SF
+33300 45758 MT
+(Bases)SH
+/Times-Roman SF
+(, VLDB, 1982, pp. 62-76.)SH
+5544 46294 MT
+([2])SH
+7344 XM
+(Sun Microsystems, Inc.,)679 W
+/Times-Italic SF
+18331 XM
+(Networking on the)
+679 W( SUN)680 W
+/Times-Roman SF
+31500 46819 MT
+([19])SH
+33300 XM
+(Michael J. Carey, Miron Livny, ``Distributed)
+71 W( Concurrency)70 W
+/Times-Italic SF
+7344 47308 MT
+(Workstation,)SH
+/Times-Roman SF
+12194 XM
+(Mountain View, California, 1986.)SH
+33300 47833 MT
+(Control Performance: A)
+41 W( Study of Algorithms, Distribution,)42 W
+5544 48369 MT
+([3])SH
+7344 XM
+(M. Satyanarayanan,)
+183 W( John H. Howard, David A. Nichols,)182 W
+33300 48847 MT
+(and Replication'',)236 W
+/Times-Italic SF
+40497 XM
+(Proc. Fourteenth Int'l Conf.)
+236 W( on Very)235 W
+/Times-Roman SF
+7344 49383 MT
+(Robert N. Sidebotham, Alfred Z. Spector, Michael)
+31 W( J. West,)32 W
+/Times-Italic SF
+33300 49861 MT
+(Large Data Bases)SH
+/Times-Roman SF
+(, VLDB, 1988, pp. 13-25.)SH
+7344 50397 MT
+(``The ITC Distributed File System:)
+592 W( Principles and)591 W
+31500 50922 MT
+([20])SH
+33300 XM
+(Kai Li and Paul Hudak, ``Memory Coherence in)
+178 W( Shared)179 W
+7344 51411 MT
+(Design'',)SH
+/Times-Italic SF
+11294 XM
+(Proc. 10th Symposium on Operating System)350 W
+/Times-Roman SF
+33300 51936 MT
+(Virtual Memory Systems'',)425 W
+/Times-Italic SF
+44725 XM
+(Proc. Fifth Annual ACM)425 W
+7344 52425 MT
+(Principles)SH
+/Times-Roman SF
+(, ACM, December 1985, pp. 35-50.)SH
+/Times-Italic SF
+33300 52950 MT
+(Symposium on Principles of Distributed Computing)550 W
+/Times-Roman SF
+(,)SH
+5544 53486 MT
+([4])SH
+7344 XM
+(Alfred Z. Spector, ``Achieving Application Requirements)155 W
+33300 53964 MT
+(August 1986, pp. 229-239.)SH
+7344 54500 MT
+(on Distributed Systems Architectures'', in)410 W
+/Times-Italic SF
+24844 XM
+(Distributed)SH
+/Times-Roman SF
+31500 55025 MT
+([21])SH
+33300 XM
+(Umakishore Ramachandran, Mustaque Ahamad, M. Yousef)SH
+/Times-Italic SF
+7344 55514 MT
+(Systems,)SH
+/Times-Roman SF
+10644 XM
+(Sape Mullender, ed., ACM Press, 1989, pp. 19-33.)SH
+33300 56039 MT
+(A. Khalidi, ``Coherence of Distributed Shared Memory:)225 W
+5544 56575 MT
+([5])SH
+7344 XM
+(Andrew D. Birrell,)
+459 W( Bruce J. Nelson, ``Implementing)458 W
+33300 57053 MT
+(Unifying Synchronization and Data Transfer'',)75 W
+/Times-Italic SF
+50825 XM
+(Proc. 1989)75 W
+/Times-Roman SF
+7344 57589 MT
+(Remote Procedure Calls'',)705 W
+/Times-Italic SF
+19259 XM
+(ACM Trans. Computer)705 W
+33300 58067 MT
+(Int'l Conf. on Parallel Processing)SH
+/Times-Roman SF
+(, 1989, pp. 160-169.)SH
+/Times-Italic SF
+7344 58603 MT
+(Systems)SH
+/Times-Roman SF
+(, Vol. 2, No. 1, February 1984, pp. 39-59.)SH
+31500 59128 MT
+([22])SH
+33300 XM
+(Jeffrey L. Eppinger, ``CPA: The Camelot Performance)300 W
+5544 59664 MT
+([6])SH
+7344 XM
+(Umakishore Ramachandran, M.)
+184 W( Yousef A. Khalidi, ``An)183 W
+33300 60142 MT
+(Analyzer'', Camelot Working Memo 12.)SH
+7344 60678 MT
+(Implementation of Distributed Shared Memory'', Tech.)305 W
+31500 61203 MT
+([23])SH
+33300 XM
+(Kai Li, Richard Schaefer, ``A Hypercube Shared Virtual)175 W
+7344 61692 MT
+(report GIT-ICS-88/50, Georgia Institute of Technology,)285 W
+33300 62217 MT
+(Memory System'',)328 W
+/Times-Italic SF
+40981 XM
+(Proc. 1989)
+328 W( Int'l Conf. on Parallel)329 W
+/Times-Roman SF
+7344 62706 MT
+(December 1988.)SH
+/Times-Italic SF
+33300 63231 MT
+(Processing)SH
+/Times-Roman SF
+(, 1989, pp. 125-132.)SH
+5544 63767 MT
+([7])SH
+7344 XM
+(Kai Li, ``IVY: A)
+315 W( Shared Virtual Memory System for)316 W
+31500 64292 MT
+([24])SH
+33300 XM
+(Brett D. Fleisch, Gerald J. Popek, ``Mirage: A Coherent)175 W
+7344 64781 MT
+(Parallel Computing'',)179 W
+/Times-Italic SF
+15777 XM
+(Proc. 1988 Int'l)
+179 W( Conf. on Parallel)178 W
+/Times-Roman SF
+33300 65306 MT
+(Distributed Shared Memory Design'', Tech. report)655 W
+/Times-Italic SF
+7344 65795 MT
+(Processing)SH
+/Times-Roman SF
+(, 1989, pp. 94-101.)SH
+33300 66320 MT
+(CSD-890020, UCLA, April 1989.)SH
+5544 66856 MT
+([8])SH
+7344 XM
+(Alessandro Forin, Joseph Barrera, Michael Young,)
+29 W( Richard)30 W
+31500 67381 MT
+([25])SH
+33300 XM
+(Cary G. Gray, David R. Cheriton, ``Leases: An Efficient)150 W
+7344 67870 MT
+(Rashid, ``Design, Implementation, and)
+694 W( Performance)693 W
+33300 68395 MT
+(Fault-Tolerant Mechanism for Distributed File Cache)465 W
+7344 68884 MT
+(Evaluation of a Distributed Shared Memory Server for)275 W
+33300 69409 MT
+(Consistency'',)SH
+/Times-Italic SF
+39345 XM
+(Proc. Twelfth Annual Symposium on)595 W
+/Times-Roman SF
+7344 69898 MT
+(Mach'', Tech. report CMU-CS-88-165, Carnegie Mellon)210 W
+/Times-Italic SF
+33300 70423 MT
+(Operating Systems Principles)SH
+/Times-Roman SF
+(, ACM, December 1989.)SH
+7344 70912 MT
+(University, August 1988.)SH
+31500 71484 MT
+([26])SH
+33300 XM
+(Meichun Hsu, Va-On Tam, ``Managing)
+408 W( Databases in)409 W
+5544 71973 MT
+([9])SH
+7344 XM
+(Brett D. Fleisch, ``Distributed Shared Memory in)
+6 W( a Loosely)7 W
+10 SS 
+30100 75600 MT
+(30)SH
+ES
+%%Page: 31 10
+BS
+0 SI
+9 /Times-Roman AF
+7344 7817 MT
+(Distributed Virtual Memory'', Tech. report TR-07-88,)400 W
+10 SS 
+31500 7886 MT
+(transaction \050specified by)46 W
+/Courier SF
+41719 XM
+(famId)SH
+/Times-Roman SF
+(\051 is entering the prepared)46 W
+9 SS 
+7344 8831 MT
+(Center for Research in)
+212 W( Computing Technology, Harvard)213 W
+10 SS 
+31500 9083 MT
+(state, and includes a list of write locks currently)
+104 W( held by)105 W
+9 SS 
+7344 9845 MT
+(University, March 1988.)SH
+10 SS 
+31500 10280 MT
+(the transaction.)SH
+9 SS 
+5544 10906 MT
+([27])SH
+7344 XM
+(William E. Snaman Jr., David W.)
+66 W( Thiel, ``The VAX/VMS)65 W
+/Courier SF
+32580 11790 MT
+(routine HS_Forget\050)SH
+/Times-Roman SF
+7344 11920 MT
+(Distributed Lock)
+1168 W( Manager'',)1169 W
+/Times-Italic SF
+21450 XM
+(Digital Technical)1169 W
+/Courier SF
+34740 12738 MT
+(hsPort :)
+2700 W( port_t;)SH
+/Times-Italic SF
+7344 12934 MT
+(Journal)SH
+/Times-Roman SF
+(, No. 5, September 1987, pp. 29-43.)SH
+/Courier SF
+34740 13686 MT
+(famId :)
+3240 W( cam_fam_id_t;)SH
+34740 14634 MT
+(server :)
+2700 W( server_t\051;)SH
+10 /Times-Bold AF
+15160 14684 MT
+(Appendix)SH
+/Times-Roman SF
+6544 15881 MT
+(Here are)
+10 W( listed the remote procedure calls that comprise)9 W
+/Courier SF
+31500 16044 MT
+(HS_Forget)SH
+/Times-Roman SF
+37308 XM
+(indicates that the top-level transaction)
+158 W( has)157 W
+5544 17078 MT
+(the protocol between the)
+182 W( lock manager process and the)183 W
+31500 17241 MT
+(committed or aborted.)SH
+5544 18275 MT
+(server library.  The ``HS'' routines are)
+243 W( calls from the)242 W
+9 /Courier AF
+32580 18751 MT
+(routine SH_Lock\050)SH
+10 /Times-Roman AF
+5544 19472 MT
+(server to the lock manager.  The ``SH'' routines are)
+60 W( calls)61 W
+9 /Courier AF
+34740 19699 MT
+(sPort :)
+3240 W( port_t;)SH
+34740 20647 MT
+(lockName :)
+1620 W( lock_name_t;)SH
+10 /Times-Roman AF
+5544 20669 MT
+(from the lock manager to the server.)SH
+9 /Courier AF
+34740 21595 MT
+(lockMode :)
+1620 W( lock_mode_t;)SH
+6624 22179 MT
+(routine HS_Lock\050)SH
+34740 22543 MT
+(tid :)
+4320 W( cam_tid_t;)SH
+8784 23127 MT
+(hsPort :)
+2700 W( port_t;)SH
+32580 23491 MT
+(OUT cacheStatus : lock_status_t;)SH
+8784 24075 MT
+(lockName :)
+1620 W( lock_name_t;)SH
+32580 24439 MT
+(OUT readers)
+SH( :)
+2160 W( cam_tid_list_t;)SH
+8784 25023 MT
+(lockMode :)
+1620 W( lock_mode_t;)SH
+32580 25387 MT
+(OUT writers)
+SH( :)
+2160 W( cam_tid_list_t\051;)SH
+8784 25971 MT
+(lockPolicy :)
+540 W( lock_policy_t;)SH
+10 SS 
+31500 26797 MT
+(SH_Lock)SH
+/Times-Roman SF
+35976 XM
+(is used by the lock manager to request a server)26 W
+9 /Courier AF
+8784 26919 MT
+(tid :)
+4320 W( cam_tid_t;)SH
+8784 27867 MT
+(server :)
+2700 W( server_t;)SH
+10 /Times-Roman AF
+31500 27994 MT
+(to release a cached lock on behalf of the given)542 W
+9 /Courier AF
+6624 28815 MT
+(OUT cacheable)
+SH( :)
+1080 W( boolean_t\051;)SH
+10 /Times-Roman AF
+31500 29191 MT
+(transaction. The)
+364 W( server may elect to grant the lock to the)57 W
+/Courier SF
+5544 30225 MT
+(HS_Lock)SH
+/Times-Roman SF
+10360 XM
+(obtains a lock on behalf)
+366 W( of the indicated)365 W
+31500 30388 MT
+(transaction without releasing the)
+61 W( cached lock.  Or, it may)60 W
+5544 31422 MT
+(transaction \050)332 W
+/Courier SF
+(tid)SH
+/Times-Roman SF
+(\051. The)
+914 W( call blocks until)
+332 W( the lock is)333 W
+31500 31585 MT
+(demote a cached write lock to)
+243 W( a cached read lock, or)244 W
+5544 32619 MT
+(available. The)
+632 W( return parameter)191 W
+/Courier SF
+19549 XM
+(cacheable)SH
+/Times-Roman SF
+25389 XM
+(indicates)SH
+31500 32782 MT
+(release the cached)
+208 W( lock entirely.  The return parameter)207 W
+5544 33816 MT
+(whether the server is permitted)
+151 W( to cache the lock in the)152 W
+/Courier SF
+31500 33979 MT
+(cacheStatus)SH
+/Times-Roman SF
+38398 XM
+(indicates which selection it made.)
+48 W( If)
+347 W( the)49 W
+5544 35013 MT
+(mode it requested.)SH
+31500 35176 MT
+(server is releasing a cached lock while)
+431 W( it still has)430 W
+31500 36373 MT
+(transactions holding the)
+81 W( lock, it will return a list of these)82 W
+9 /Courier AF
+6624 36523 MT
+(routine HS_TryLock\050)SH
+8784 37471 MT
+(hsPort :)
+2700 W( port_t;)SH
+10 /Times-Roman AF
+31500 37570 MT
+(transactions in)SH
+/Courier SF
+37555 XM
+(readers)SH
+/Times-Roman SF
+42005 XM
+(and)SH
+/Courier SF
+43699 XM
+(writers)SH
+/Times-Roman SF
+(.)SH
+9 /Courier AF
+8784 38419 MT
+(lockName :)
+1620 W( lock_name_t;)SH
+32580 39080 MT
+(routine SH_TryLock\050)SH
+8784 39367 MT
+(lockMode :)
+1620 W( lock_mode_t;)SH
+34740 40028 MT
+(sPort :)
+3240 W( port_t;)SH
+8784 40315 MT
+(lockPolicy :)
+540 W( lock_policy_t;)SH
+34740 40976 MT
+(lockName :)
+1620 W( lock_name_t;)SH
+6624 41263 MT
+(OUT success)
+SH( :)
+2160 W( boolean_t;)SH
+34740 41924 MT
+(lockMode :)
+1620 W( lock_mode_t;)SH
+8784 42211 MT
+(tid :)
+4320 W( cam_tid_t;)SH
+32580 42872 MT
+(OUT success)
+SH( :)
+2160 W( boolean_t;)SH
+8784 43159 MT
+(server :)
+2700 W( server_t;)SH
+34740 43820 MT
+(tid :)
+4320 W( cam_tid_t;)SH
+6624 44107 MT
+(OUT cacheable)
+SH( :)
+1080 W( boolean_t\051;)SH
+32580 44768 MT
+(OUT cacheStatus : lock_status_t;)SH
+10 SS 
+5544 45517 MT
+(HS_TryLock)SH
+/Times-Roman SF
+11794 XM
+(is a non-blocking form of)SH
+/Courier SF
+22265 XM
+(HS_Lock)SH
+/Times-Roman SF
+(.)SH
+9 /Courier AF
+32580 45716 MT
+(OUT readers)
+SH( :)
+2160 W( cam_tid_list_t;)SH
+32580 46664 MT
+(OUT writers)
+SH( :)
+2160 W( cam_tid_list_t\051;)SH
+6624 47027 MT
+(routine HS_Unlock\050)SH
+8784 47975 MT
+(hsPort :)
+2700 W( port_t;)SH
+10 SS 
+31500 48074 MT
+(SH_TryLock)SH
+/Times-Roman SF
+37750 XM
+(is a non-blocking form of)SH
+/Courier SF
+48221 XM
+(SH_Lock)SH
+/Times-Roman SF
+(.)SH
+9 /Courier AF
+8784 48923 MT
+(lockName :)
+1620 W( lock_name_t;)SH
+32580 49584 MT
+(routine SH_GetLockInfo\050)SH
+8784 49871 MT
+(server :)
+2700 W( server_t;)SH
+34740 50532 MT
+(sPort :)
+3240 W( port_t;)SH
+8784 50819 MT
+(tid :)
+4320 W( cam_tid_t\051;)SH
+32580 51480 MT
+(OUT lockNames)
+SH( :)
+1080 W( lock_name_list_t;)SH
+10 SS 
+5544 52229 MT
+(HS_Unlock)SH
+/Times-Roman SF
+11574 XM
+(indicates that the given transaction has)380 W
+9 /Courier AF
+32580 52428 MT
+(OUT lockModes)
+SH( :)
+1080 W( lock_mode_list_t;)SH
+32580 53376 MT
+(OUT cached)
+SH( :)
+2700 W( boolean_list_t;)SH
+10 /Times-Roman AF
+5544 53426 MT
+(released the lock, or, if)38 W
+/Courier SF
+15149 XM
+(tid)SH
+/Times-Roman SF
+17238 XM
+(is)SH
+/Courier SF
+18194 XM
+(CAM_TID_NULL)SH
+/Times-Roman SF
+(, that the)39 W
+9 /Courier AF
+32580 54324 MT
+(OUT tids)
+SH( :)
+3780 W( cam_tid_list_t\051;)SH
+10 /Times-Roman AF
+5544 54623 MT
+(server is uncaching the lock.)SH
+/Courier SF
+31500 55734 MT
+(SH_GetLockInfo)SH
+/Times-Roman SF
+40199 XM
+(is used by the lock manager when)
+49 W( it)48 W
+9 /Courier AF
+6624 56133 MT
+(routine HS_DemoteLock\050)SH
+10 /Times-Roman AF
+31500 56931 MT
+(recovers after)
+146 W( a crash to obtain the information it needs)147 W
+9 /Courier AF
+8784 57081 MT
+(hsPort :)
+2700 W( port_t;)SH
+8784 58029 MT
+(lockName :)
+1620 W( lock_name_t;)SH
+10 /Times-Roman AF
+31500 58128 MT
+(for its volatile hash tables.)SH
+9 /Courier AF
+8784 58977 MT
+(server :)
+2700 W( server_t;)SH
+32580 59638 MT
+(routine SH_WaitForLockToBreak\050)SH
+8784 59925 MT
+(tid :)
+4320 W( cam_tid_t\051;)SH
+34740 60586 MT
+(sPort :)
+3240 W( port_t;)SH
+10 SS 
+5544 61335 MT
+(HS_DemoteLock)SH
+/Times-Roman SF
+13685 XM
+(indicates that the given transaction is)91 W
+9 /Courier AF
+34740 61534 MT
+(lockName :)
+1620 W( lock_name_t;)SH
+34740 62482 MT
+(lockMode :)
+1620 W( lock_mode_t;)SH
+10 /Times-Roman AF
+5544 62532 MT
+(demoting a write lock to a read lock, or, if)325 W
+/Courier SF
+25902 XM
+(tid)SH
+/Times-Roman SF
+28277 XM
+(is)SH
+9 /Courier AF
+34740 63430 MT
+(tid :)
+4320 W( cam_tid_t;)SH
+10 SS 
+5544 63729 MT
+(CAM_TID_NULL)SH
+/Times-Roman SF
+(, that the server is changing)
+212 W( a cached)211 W
+9 /Courier AF
+32580 64378 MT
+(OUT formerHolders: cam_tid_list_t\051;)SH
+10 /Times-Roman AF
+5544 64926 MT
+(write lock into a cached read lock.)SH
+/Courier SF
+31500 65788 MT
+(SH_WaitForLockToBreak)SH
+/Times-Roman SF
+44738 XM
+(is used when the lock)388 W
+9 /Courier AF
+6624 66436 MT
+(routine HS_Prepare\050)SH
+10 /Times-Roman AF
+31500 66985 MT
+(manager wishes to obtain a lock from)
+79 W( a server when that)80 W
+9 /Courier AF
+8784 67384 MT
+(hsPort :)
+2700 W( port_t;)SH
+10 /Times-Roman AF
+31500 68182 MT
+(lock is)
+161 W( not cached by the server.  The return parameter)160 W
+9 /Courier AF
+8784 68332 MT
+(lockNames :)
+1080 W( lock_name_list_t;)SH
+8784 69280 MT
+(famId :)
+3240 W( cam_fam_id_t;)SH
+10 SS 
+31500 69379 MT
+(formerHolders)SH
+/Times-Roman SF
+39791 XM
+(is a)
+241 W( list of all the transactions that)242 W
+9 /Courier AF
+8784 70228 MT
+(server :)
+2700 W( server_t\051;)SH
+10 /Times-Roman AF
+31500 70576 MT
+(were holding the)
+312 W( lock.  \050This optimization eliminates)311 W
+/Courier SF
+5544 71638 MT
+(HS_Prepare)SH
+/Times-Roman SF
+12613 XM
+(indicates that the given)
+819 W( top-level)820 W
+31500 71773 MT
+(extra)SH
+/Courier SF
+33749 XM
+(HS_Unlock)SH
+/Times-Roman SF
+39399 XM
+(calls by the server.\051)SH
+30100 75600 MT
+(31)SH
+ES
+%%Trailer
+%%Pages: 10
+%%DocumentFonts: Times-Roman Times-Bold Times-Italic Symbol Courier
